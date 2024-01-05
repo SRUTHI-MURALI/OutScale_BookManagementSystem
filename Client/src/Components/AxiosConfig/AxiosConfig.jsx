@@ -40,6 +40,10 @@ export const userLogin = (email, password) => {
   return axios.post(`${Base_Url}/api/auth/login`, { email, password });
 };
 
+export const getBooks = () => {
+  return api.get(`/books/published`);
+};
+
 
 
 export default api;

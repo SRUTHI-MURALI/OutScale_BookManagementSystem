@@ -5,6 +5,8 @@ import Register from "./Pages/Register.jsx";
 import OtpVerify from "./Pages/OtpVerify.jsx";
 import Login from "./Pages/Login.jsx";
 import Home from "./Pages/Home.jsx";
+import PublishedBooks from "./Pages/PublishedBooks.jsx";
+import PublishBook from "./Pages/PublishBook.jsx";
 
 
 function App() {
@@ -16,8 +18,8 @@ function App() {
           <Route path="/verifyOtp/:email" element={<OtpVerify />} />
           <Route path="/login" element={<Login />} />
           <Route path="/homePage" element={<Home />} />
-          <Route path="/publishedBooks" element={<Home />} />
-          <Route path="/publishedBooks" element={<Home />} />
+          <Route path="/publishedBooks" element={<PublishedBooks/>} />
+          <Route path="/addBooks" element={<PublishBook/>} />
         </Routes>
       </Router>
     </>

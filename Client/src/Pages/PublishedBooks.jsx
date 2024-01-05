@@ -4,26 +4,28 @@ import { Container } from 'react-bootstrap'
 
 import { useNavigate } from 'react-router-dom'
 
-function Bookmanagement() {
+function PublishedBooks() {
+    
   const navigate=useNavigate()
+
   useEffect(() => {
     const userData = localStorage.getItem("userData");
     const parseData = userData ? JSON.parse(userData) : null;
     if (parseData) {
-      navigate("/");
+      navigate("/publishedBooks");
     }else{
       navigate("/login");
 
     }
   }, [navigate]);
   return (
-   
-     <Container>
+    <Container>
       <Header/>
      
      </Container>
+    
   
   )
 }
 
-export default Bookmanagement
+export default PublishedBooks

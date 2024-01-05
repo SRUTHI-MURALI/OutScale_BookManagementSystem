@@ -4,14 +4,15 @@ import { Container } from 'react-bootstrap'
 
 import { useNavigate } from 'react-router-dom'
 import AllBooksList from '../Components/UserHome/AllBooksList'
+import BookPublishForm from '../Components/PublishBook/BookPublishForm'
 
-function Home() {
+function PublishBook() {
   const navigate=useNavigate()
   useEffect(() => {
     const userData = localStorage.getItem("userData");
     const parseData = userData ? JSON.parse(userData) : null;
     if (parseData) {
-      navigate("/homePage");
+      navigate("/addBooks");
     }else{
       navigate("/login");
 
@@ -21,10 +22,11 @@ function Home() {
    
      <Container>
       <Header/>
-      <AllBooksList/>
+      <BookPublishForm/>
      </Container>
   
   )
 }
 
-export default Home
+export default PublishBook
+
