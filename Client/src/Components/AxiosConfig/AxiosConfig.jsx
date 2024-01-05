@@ -5,6 +5,8 @@ const api = axios.create({
   baseURL: `${Base_Url}/api`,
 });
 
+
+
 api.interceptors.request.use(
   (config) => {
     const userData = localStorage.getItem("userData");
@@ -23,7 +25,7 @@ api.interceptors.request.use(
 );
 
 export const SendOtp = (name, email, phone, password) => {
-  return axios.post(`${Base_Url}/api/auth/signin`, {
+  return axios.post(`${Base_Url}/api/auth/signup`, {
     name,
     email,
     phone,
@@ -41,7 +43,20 @@ export const userLogin = (email, password) => {
 };
 
 export const getBooks = () => {
-  return api.get(`/books/published`);
+  return axios.get(`${Base_Url}/api/books/published`);
+ 
+};
+
+export const addBooks = (title, summary, genre, price, image,userId) => {
+  console.log(title, summary, genre,price, image, userId);
+  return api.post(`/books/publish`,{
+    title,
+    summary,
+    genre,
+    image,
+    price,
+    userId,
+  });
 };
 
 

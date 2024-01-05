@@ -10,6 +10,7 @@ let globalData = {};
 const userRegisterSendOtp = async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
+  
 
     const emailfind = await userSchema.findOne({ email });
 

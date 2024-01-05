@@ -32,7 +32,7 @@ function AllBooksList() {
         setAllBooks(res.data.allBooks);
        
       };
-      books(parseData._id);
+      books();
     } catch (error) {
       toast.error("Error fetching notes");
     }
@@ -46,6 +46,15 @@ function AllBooksList() {
     }
   }, [searchedBook]);
 
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      undefined,
+      options
+    );
+    return formattedDate;
+  }
+
   let PageSize = 8;
   const pageCount = Math.ceil(allBooks.length / PageSize);
 
@@ -58,6 +67,9 @@ function AllBooksList() {
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
+
+  
+  
 
   return (
     <>
@@ -128,11 +140,14 @@ function AllBooksList() {
                         >
                           {book?.title}
                         </h3>
-                       
-                        <p style={{ marginBottom: "5px" }}>{book?.summary}</p>
+                        <p style={{ color: "gray" }}>
+                          {formatDate(book?.createdAt)}
+                        </p>
+                        <p style={{ marginBottom: "5px" }}>{book?.genre}</p>
+                        
                         <p
                           style={{ marginBottom: "5px" }}
-                          dangerouslySetInnerHTML={{ __html: book?.genre }}
+                          dangerouslySetInnerHTML={{ __html: book?.summary }}
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={3} className="mt-3">

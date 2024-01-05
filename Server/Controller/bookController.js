@@ -3,14 +3,15 @@ import userSchema from '../Model/userModel.js'
 
 /**************************** User Publish a Book *************************************/
 const userPublish=async (req,res)=>{
+  
     try {
-        const { title, summary, type, image, userId } = req.body;
+        const { title, summary, genre, image, userId } = req.body;
         const user = await userSchema.findById(userId);
         if (user) {
           const newBook = await bookSchema({
             title,
             summary,
-            type,
+            genre,
             image,
             author: userId,
           });
@@ -63,6 +64,7 @@ const userUnpublish=async(req,res)=>{
 /**************************** all Published Books *************************************/
 
 const allPublishedBooks=async (req,res)=>{
+  
     try {
        const allBooks= await bookSchema.find()
        res.status(200).json({allBooks}) 

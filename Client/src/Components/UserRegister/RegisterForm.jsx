@@ -119,7 +119,7 @@ function RegisterForm() {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3 mt-3" controlId="formGridAddress1">
+              <Form.Group className="mb-3 mt-3" controlId="formGridAddress3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="text"
@@ -138,7 +138,7 @@ function RegisterForm() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group as={Col} controlId="formGridPassword">
+                <Form.Group as={Col} controlId="formGridPassword2">
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control
                     type="password"

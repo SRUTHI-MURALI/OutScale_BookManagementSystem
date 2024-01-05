@@ -13,8 +13,8 @@ app.use(express.json());
 connectDB();
 const port = process.env.port;
 
-app.use("api/auth", userRouter);
-app.use("api/books", bookRouter);
+app.use("/api/auth", userRouter);
+app.use("/api/books", bookRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
