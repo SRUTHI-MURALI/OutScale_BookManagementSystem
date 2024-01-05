@@ -79,12 +79,14 @@ const userRegisterVerifyOtp = async (req, res) => {
 /**************************** User Login  *************************************/
 
 const userLogin = async (req, res) => {
+  
   try {
     const { email, password } = req.body;
 
     const user = await userSchema.findOne({ email });
 
     if (user) {
+     
       const isMatchPassword = await bcrypt.compare(password, user.password);
       if (isMatchPassword) {
         const token = generateToken(user._id);
