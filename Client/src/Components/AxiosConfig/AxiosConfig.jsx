@@ -2,7 +2,7 @@ import axios from "axios";
 import { Base_Url } from "../../../Config/Config.jsx";
 
 const api = axios.create({
-  baseURL: `${Base_Url}/user`,
+  baseURL: `${Base_Url}/api`,
 });
 
 api.interceptors.request.use(
@@ -23,7 +23,7 @@ api.interceptors.request.use(
 );
 
 export const SendOtp = (name, email, phone, password) => {
-  return axios.post(`${Base_Url}/user/register`, {
+  return axios.post(`${Base_Url}/api/auth/signin`, {
     name,
     email,
     phone,
@@ -32,12 +32,12 @@ export const SendOtp = (name, email, phone, password) => {
 };
 
 export const VerifyOtp = (verificationCode) => {
-  console.log("verify", verificationCode);
-  return axios.post(`${Base_Url}/user/verifyOtp`, { verificationCode });
+ 
+  return axios.post(`${Base_Url}/api/auth/verifyOtp`, { verificationCode });
 };
 
 export const userLogin = (email, password) => {
-  return axios.post(`${Base_Url}/user/login`, { email, password });
+  return axios.post(`${Base_Url}/api/auth/login`, { email, password });
 };
 
 

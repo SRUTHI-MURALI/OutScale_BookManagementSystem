@@ -4,17 +4,15 @@ const userRouter = express.Router();
 import {userRegisterSendOtp,userRegisterVerifyOtp,userLogin} from "../Controller/loginController.js"
 
 /**************************** User Register  *************************************/
-userRouter.post("/register", userRegisterSendOtp);
+userRouter.post("/signup", userRegisterSendOtp);
 userRouter.post("/verifyOtp", userRegisterVerifyOtp);
 
 /**************************** User Login  *************************************/
 userRouter.post("/login", userLogin);
 
-/**************************** User Note Management  *************************************/
 
 
-/**************************** User Search   *************************************/
-// userRouter.post("/search", handleSearch);
+
 
 /**************************** User Tag note   *************************************/
 // userRouter.put("/tagNote/:id", userLoggedIn, usertagNote);

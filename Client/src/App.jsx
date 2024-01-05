@@ -16,6 +16,8 @@ function App() {
           <Route path="/verifyOtp/:email" element={<OtpVerify />} />
           <Route path="/login" element={<Login />} />
           <Route path="/homePage" element={<Home />} />
+          <Route path="/publishedBooks" element={<Home />} />
+          <Route path="/publishedBooks" element={<Home />} />
         </Routes>
       </Router>
     </>
