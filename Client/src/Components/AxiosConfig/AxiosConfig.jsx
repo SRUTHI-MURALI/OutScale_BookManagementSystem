@@ -5,8 +5,6 @@ const api = axios.create({
   baseURL: `${Base_Url}/api`,
 });
 
-
-
 api.interceptors.request.use(
   (config) => {
     const userData = localStorage.getItem("userData");
@@ -34,7 +32,6 @@ export const SendOtp = (name, email, phone, password) => {
 };
 
 export const VerifyOtp = (verificationCode) => {
- 
   return axios.post(`${Base_Url}/api/auth/verifyOtp`, { verificationCode });
 };
 
@@ -44,17 +41,22 @@ export const userLogin = (email, password) => {
 
 export const getBooks = () => {
   return api.get(`/books/published`);
- 
 };
 
 export const getUserBooks = (id) => {
   return api.get(`/books/user/${id}`);
- 
 };
 
-export const addBooks = (title, summary, genre, price, image,userId,userName) => {
- 
-  return api.post(`/books/publish`,{
+export const addBooks = (
+  title,
+  summary,
+  genre,
+  price,
+  image,
+  userId,
+  userName
+) => {
+  return api.post(`/books/publish`, {
     title,
     summary,
     genre,
@@ -65,13 +67,17 @@ export const addBooks = (title, summary, genre, price, image,userId,userName) =>
   });
 };
 
-export const tagingBooks = (id,userId) => {
-  console.log(id,userId,'kkk');
-  return api.put(`/books/managetags/${id}`,{userId});
- 
+export const tagingBooks = (id, userId) => {
+  return api.put(`/books/managetags/${id}`, { userId });
 };
 
+export const getEditBooks = (id) => {
+  return api.get(`/books/geteditbook/${id}`);
+};
 
-
+export const editBook = ( title, summary, genre,price,id) => {
+  console.log(id,'jgfjh');
+  return api.put(`/books/editbooks/${id}`, { title, summary, genre,price});
+};
 
 export default api;

@@ -159,7 +159,7 @@ console.log(res.data.author);
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={3} className="mt-3">
-                        {console.log(parseData.tagged,'gfjjghfghfghfh')}
+                       
                         {
                         parseData &&
                         parseData.tagged &&

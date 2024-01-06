@@ -6,9 +6,12 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBackward } from "react-icons/fa";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { getUserBooks } from "../AxiosConfig/AxiosConfig";
 import SearchBar from "../SearchBar/SearchBar";
 import nil from "../../assets/No books.png"
+import { Image_Url } from "../../../Config/Config";
 
 function UserPublishedBooksList() {
   const [allBooks, setAllBooks] = useState([]);
@@ -24,6 +27,24 @@ function UserPublishedBooksList() {
     navigate("/addBooks");
   };
 
+  const handleEdit = async (id) => {
+  
+    try {
+     
+      navigate(`/editBooks/${id}`);
+    } catch (error) {
+      toast.error("Error editing notes");
+    }
+  };
+
+  const handlepublish = async (id) => {
+    try {
+      
+      window.location.reload();
+    } catch (error) {
+      toast.error("Error deleting notes");
+    }
+  };
   useEffect(() => {
     try {
       const books = async (userId) => {
@@ -130,31 +151,45 @@ function UserPublishedBooksList() {
                             <Card.Img
                               style={{ height: "14rem" }}
                               variant="top"
-                              
+                              src={`${Image_Url}/${book?.image}`}
                             />
                           </div>
                         </Link>
                       </Col>
                       <Col xs={12} sm={6} md={5} className="mt-5">
                         <h3
-                          style={{ marginBottom: "10px", fontWeight: "bold" }}
+                          style={{ marginBottom: "8px", fontWeight: "bold" }}
                         >
                           {book?.title}
                         </h3>
                         <p style={{ color: "gray" }}>
                           {formatDate(book?.createdAt)}
+                          <p style={{ marginBottom: "1px" }}>{book?.authorName}</p>
                         </p>
-                        <p style={{ marginBottom: "5px" }}>{book?.genre}</p>
                         
-                        <p
-                          style={{ marginBottom: "5px" }}
+                        <p style={{ marginBottom: "3px" }}>Genre : {book?.genre}</p>
+                        <p style={{ marginBottom: "3px" }}>Amount : {book?.price}</p>
+                        <p 
+                          style={{ marginBottom: "2px" }}
                           dangerouslySetInnerHTML={{ __html: book?.summary }}
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={3} className="mt-3">
                         
-                        
-
+                      <Button
+                          variant="none"
+                          onClick={() => handleEdit(book?._id)}
+                        >
+                          {" "}
+                          <FaEdit />
+                        </Button>
+                        <Button
+                          variant="none"
+                          onClick={() => handlepublish(book?._id)}
+                        >
+                          {" "}
+                          <MdDelete />
+                        </Button>
                        
                       </Col>
                     </React.Fragment>
