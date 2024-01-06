@@ -34,8 +34,6 @@ function BookPublishForm() {
       }
     }
 
-   
-
     await imageHandler();
 
 

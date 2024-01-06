@@ -110,4 +110,47 @@ const userLogin = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-export { userRegisterSendOtp, userRegisterVerifyOtp, userLogin };
+
+/**************************** User Profile  *************************************/
+
+const userProfile= async (req,res)=>{
+  try {
+    const {id}= req.params
+    const userDetails= await userSchema.findById(id)
+    if(userDetails){
+      res.status(201).json({
+        userDetails
+      })
+    }else{
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+/**************************** User Edit Profile  *************************************/
+
+const userEditProfile= async(req,res)=>{
+  try {
+    const {id}= req.params
+    const {name, phone, email,password,gender,photo,age,country}= req.body
+    const userDetails= await userSchema.findByIdAndUpdate(
+      id,
+      {name, phone, email,password,gender,photo,age,country
+
+      },
+      {new:true}
+    )
+    if(userDetails){
+      res.status(201).json({
+        userDetails
+      })
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+
+export { userRegisterSendOtp, userRegisterVerifyOtp, userLogin,userEditProfile,userProfile };

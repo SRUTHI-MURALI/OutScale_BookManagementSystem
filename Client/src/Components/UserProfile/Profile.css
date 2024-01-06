@@ -1,0 +1,45 @@
+*.profileContainer {
+
+    margin: auto;
+    background-color: #fff;
+  
+     
+     float: left;
+     width: 70%;
+     
+  }
+  
+  .bodyContainer{
+    margin-top: 170px;
+    
+  }
+  .profile-pic-area {
+    text-align: center;
+    background-color: rgba(120, 181, 238, 0.856);
+    /* padding: 5px; */
+    padding-bottom: 10px;
+    padding-top: 25px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    color: white;
+  }
+  .profile-info-area {
+    padding: 30px 20px;
+  }
+  .studentName {
+    text-align: center;
+  }
+  
+  table th, table td {
+    padding: 9px; /* You can adjust the value as needed */
+    /* Or use margin: 0; if that works better for your layout */
+  }
+  
+  .form-group .col-form-label {
+    margin-bottom: 0; /* Remove bottom margin for Form.Label */
+  }
+  
+  .form-group .form-control {
+    margin-top: 0; /* Remove top margin for Form.Control */
+  }
+  

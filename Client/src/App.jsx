@@ -9,6 +9,7 @@ import PublishedBooks from "./Pages/PublishedBooks.jsx";
 import EditBooks from "./Pages/EditBooks.jsx";
 import PublishNewBook from "./Pages/PublishNewBook.jsx";
 import TaggedBooks from "./Pages/TaggedBooks.jsx";
+import Profile from "./Pages/Profile.jsx";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/addBooks" element={<PublishNewBook/>} />
           <Route path="/editBooks/:id" element={<EditBooks/>} />
           <Route path="/taggedBooks" element={<TaggedBooks/>} />
+          <Route path="/userProfile" element={<Profile/>} />
           
         </Routes>
       </Router>

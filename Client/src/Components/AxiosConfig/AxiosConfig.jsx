@@ -94,4 +94,13 @@ export const taggedBooks = (id) => {
   return api.get(`/books/getTaggedBooks/${id}`);
 };
 
+export const getUserProfile = (id) => {
+  return api.get(`/auth/profile/${id}`);
+};
+
+
+export const userEditProfile = ( id,name, phone, email,password,gender,photo,age,country) => {
+  return api.put(`/auth/editprofile/${id}`, { name, phone, email,password,gender,photo,age,country});
+};
+
 export default api;

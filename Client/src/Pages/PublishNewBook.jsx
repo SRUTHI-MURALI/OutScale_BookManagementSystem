@@ -21,7 +21,7 @@ function PublishNewBook() {
   return (
    
      <Container>
-      <Header/>
+      <Header page={"Publish Your Book"}/>
       <BookPublishForm/>
      </Container>
   

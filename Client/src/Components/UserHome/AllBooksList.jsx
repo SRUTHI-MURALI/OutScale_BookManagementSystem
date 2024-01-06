@@ -31,14 +31,12 @@ function AllBooksList() {
   };
 
   const handleTag = async (id) => {
-  try {
-    const res = await tagingBooks(id, parseData._id);
-     setTagBooks(res.data.taggedBooks);
-   
-  } catch (error) {
-    toast.error("Error tagging books");
-  }
-    
+    try {
+      const res = await tagingBooks(id, parseData._id);
+      setTagBooks(res.data.taggedBooks);
+    } catch (error) {
+      toast.error("Error tagging books");
+    }
   };
 
   useEffect(() => {
@@ -47,14 +45,12 @@ function AllBooksList() {
         const res = await taggedBooks(userId);
 
         setTagBooks(res.data.taggedBooks);
-       
       };
       books(parseData._id);
     } catch (error) {
       toast.error("Error fetching notes");
     }
   }, []);
-
 
   useEffect(() => {
     try {
@@ -121,7 +117,7 @@ function AllBooksList() {
                   onClick={handleAddBooks}
                 >
                   {" "}
-                  Add a Book{" "}
+                  Publish a Book{" "}
                 </Button>
               </Col>
             </Row>
@@ -134,7 +130,7 @@ function AllBooksList() {
                   onClick={handleAddBooks}
                 >
                   {" "}
-                  Be the first to add a Book{" "}
+                  Be the first to publish a Book{" "}
                 </Button>
               </Col>
             </Row>
@@ -145,7 +141,7 @@ function AllBooksList() {
               {allBooks
                 ? currentTableData.map((book) => (
                     <React.Fragment key={book._id}>
-                      <Col xs={12} sm={6} md={4} className="mt-3 ">
+                      <Col xs={12} sm={6} md={5} className="mt-3 ">
                         <Link style={{ textDecoration: "none" }}>
                           <div style={{ width: "15rem", height: "16rem" }}>
                             <Card.Img
@@ -165,7 +161,9 @@ function AllBooksList() {
                         <p style={{ color: "gray" }}>
                           {formatDate(book?.createdAt)}
                         </p>
-                        <p style={{ marginBottom: "5px" }}>{book?.authorName}</p>
+                        <p style={{ marginBottom: "5px" }}>
+                          {book?.authorName}
+                        </p>
                         <p style={{ marginBottom: "5px" }}>{book?.genre}</p>
 
                         <p
@@ -173,16 +171,14 @@ function AllBooksList() {
                           dangerouslySetInnerHTML={{ __html: book?.summary }}
                         ></p>
                       </Col>
-                      <Col xs={12} sm={6} md={3} className="mt-3">
-                       {console.log(tagBooks,'kljkl')}
-                        {
-                        tagBooks.includes(book?._id) ? (
-                          
+                      <Col xs={12} sm={6} md={2} className="mt-3">
+                        
+                        {tagBooks.includes(book?._id) ? (
                           <Button
                             variant="none"
                             onClick={() => handleTag(book?._id)}
                           >
-                            <FaHeart size={25} color="red"/>
+                            <FaHeart size={25} color="red" />
                           </Button>
                         ) : (
                           <Button

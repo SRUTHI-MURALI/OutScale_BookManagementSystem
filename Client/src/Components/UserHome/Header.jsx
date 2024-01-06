@@ -19,7 +19,7 @@ function Header({ page }) {
   const isHome = location.pathname === "/homepage";
   const isPublish = location.pathname === "/addBooks";
   const isPublished = location.pathname === "/publishedBooks";
-  const isProfile = location.pathname === "/studentprofile";
+  const isProfile = location.pathname === "/userProfile";
   const isTagged = location.pathname === "/taggedBooks";
 
   const handleLogout = async () => {
@@ -66,7 +66,7 @@ function Header({ page }) {
 
             <Nav.Link
               className={`nav-header-student ${isProfile ? "highlight" : ""}`}
-              href="/studentprofile"
+              href="/userProfile"
             >
               Profile
             </Nav.Link>

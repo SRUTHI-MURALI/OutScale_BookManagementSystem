@@ -1,7 +1,8 @@
 import express from "express";
 const userRouter = express.Router();
 
-import {userRegisterSendOtp,userRegisterVerifyOtp,userLogin} from "../Controller/loginController.js"
+import {userRegisterSendOtp,userRegisterVerifyOtp,userLogin,userProfile,userEditProfile} from "../Controller/loginController.js"
+import { userLoggedIn } from "../Middleware/userAuth.js";
 
 /**************************** User Register  *************************************/
 userRouter.post("/signup", userRegisterSendOtp);
@@ -10,17 +11,15 @@ userRouter.post("/verifyOtp", userRegisterVerifyOtp);
 /**************************** User Login  *************************************/
 userRouter.post("/login", userLogin);
 
+/**************************** User Profile  *************************************/
+userRouter.get("/profile/:id",userLoggedIn, userProfile);
+
+/**************************** User Edit Profile  *************************************/
+userRouter.put("/editprofile/:id",userLoggedIn, userEditProfile);
 
 
 
 
-/**************************** User Tag note   *************************************/
-// userRouter.put("/tagNote/:id", userLoggedIn, usertagNote);
 
-/**************************** User UnTag note   *************************************/
-// userRouter.put("/untagNote/:id", userLoggedIn, userUntagNote);
-
-/**************************** User tagged notes page   *************************************/
-// userRouter.get("/getTaggedNotes/:id", userLoggedIn, userTaggedNotesPage);
 
 export default userRouter;
