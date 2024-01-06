@@ -20,6 +20,7 @@ function Header({ page }) {
   const isPublish = location.pathname === "/addBooks";
   const isPublished = location.pathname === "/publishedBooks";
   const isProfile = location.pathname === "/studentprofile";
+  const isTagged = location.pathname === "/taggedBooks";
 
   const handleLogout = async () => {
     localStorage.removeItem("userData");
@@ -68,6 +69,13 @@ function Header({ page }) {
               href="/studentprofile"
             >
               Profile
+            </Nav.Link>
+
+            <Nav.Link
+              className={`nav-header-student ${isTagged ? "highlight" : ""}`}
+              href="/taggedBooks"
+            >
+              Tagged Books
             </Nav.Link>
           </Nav>
 

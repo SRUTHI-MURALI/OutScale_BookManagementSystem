@@ -68,6 +68,7 @@ export const addBooks = (
 };
 
 export const tagingBooks = (id, userId) => {
+  
   return api.put(`/books/managetags/${id}`, { userId });
 };
 export const publishBooks = (id) => {
@@ -87,6 +88,10 @@ export const editBook = ( title, summary, genre,price,id) => {
 
 export const searchBooks = (searchItem) => {
   return api.post(`/books/search`,{searchItem});
+};
+
+export const taggedBooks = (id) => {
+  return api.get(`/books/getTaggedBooks/${id}`);
 };
 
 export default api;

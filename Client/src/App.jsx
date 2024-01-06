@@ -8,6 +8,7 @@ import Home from "./Pages/Home.jsx";
 import PublishedBooks from "./Pages/PublishedBooks.jsx";
 import EditBooks from "./Pages/EditBooks.jsx";
 import PublishNewBook from "./Pages/PublishNewBook.jsx";
+import TaggedBooks from "./Pages/TaggedBooks.jsx";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/publishedBooks" element={<PublishedBooks/>} />
           <Route path="/addBooks" element={<PublishNewBook/>} />
           <Route path="/editBooks/:id" element={<EditBooks/>} />
+          <Route path="/taggedBooks" element={<TaggedBooks/>} />
           
         </Routes>
       </Router>

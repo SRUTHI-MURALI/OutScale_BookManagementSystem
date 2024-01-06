@@ -1,7 +1,7 @@
 import express from "express";
 const bookRouter = express.Router();
 
-import {userPublish,userUnpublish,allPublishedBooks,userPublishedBooks,handleSearch,userManageTaging,userEditBook,userPublishNewBook,userGetEditBook} from "../Controller/bookController.js"
+import {userPublish,userUnpublish,allPublishedBooks,userPublishedBooks,handleSearch,userManageTaging,userEditBook,userPublishNewBook,userGetEditBook,userTaggedBooks} from "../Controller/bookController.js"
 import { userLoggedIn } from "../Middleware/userAuth.js";
 
 /**************************** User Book Management  *************************************/
@@ -21,7 +21,7 @@ bookRouter.put("/managetags/:id", userLoggedIn, userManageTaging);
 
 
 /**************************** User tagged notes page   *************************************/
-// bookRouter.get("/getTaggedBooks/:id", userLoggedIn, userTaggedBooks);
+bookRouter.get("/getTaggedBooks/:id", userLoggedIn, userTaggedBooks);
 
 
 export default bookRouter;

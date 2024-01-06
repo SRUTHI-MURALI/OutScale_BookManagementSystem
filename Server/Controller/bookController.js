@@ -186,7 +186,7 @@ const userManageTaging = async (req, res) => {
     const { userId } = req.body;
 
     const bookFind = await bookSchema.findById(id);
-    const userFind = await userSchema.findById(userId);
+    const userFind = await userSchema.findById(userId)
 
     if (bookFind && userFind) {
       if (!userFind.tagged.includes(id)) {
@@ -200,13 +200,34 @@ const userManageTaging = async (req, res) => {
           await userFind.save();
         }
       }
-
-      res.status(200).json({ userFind });
+      const taggedBooks=userFind.tagged
+      res.status(200).json({ taggedBooks });
     } else {
       res.status(404).json({ message: "Note not found" });
     }
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+/**************************** User's Tagged Books *************************************/
+
+const userTaggedBooks = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const userFind = await userSchema.findById(id).populate('tagged')
+
+    if (userFind) {
+      const taggedBooks=userFind.tagged
+     
+      res.status(200).json({ taggedBooks });
+    } else {
+      res.status(500).json({ message: "no notes to display" });
+    }
+  } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -220,5 +241,6 @@ export {
   userManageTaging,
   userEditBook,
   userGetEditBook,
-  userPublishNewBook
+  userPublishNewBook,
+  userTaggedBooks
 };
