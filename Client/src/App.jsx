@@ -6,8 +6,8 @@ import OtpVerify from "./Pages/OtpVerify.jsx";
 import Login from "./Pages/Login.jsx";
 import Home from "./Pages/Home.jsx";
 import PublishedBooks from "./Pages/PublishedBooks.jsx";
-import PublishBook from "./Pages/PublishBook.jsx";
 import EditBooks from "./Pages/EditBooks.jsx";
+import PublishNewBook from "./Pages/PublishNewBook.jsx";
 
 
 function App() {
@@ -20,9 +20,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/homePage" element={<Home />} />
           <Route path="/publishedBooks" element={<PublishedBooks/>} />
-          <Route path="/addBooks" element={<PublishBook/>} />
+          <Route path="/addBooks" element={<PublishNewBook/>} />
           <Route path="/editBooks/:id" element={<EditBooks/>} />
-          <Route path="/addBooks" element={<PublishBook/>} />
+          
         </Routes>
       </Router>
     </>

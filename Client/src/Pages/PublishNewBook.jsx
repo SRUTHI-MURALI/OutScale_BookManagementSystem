@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import BookPublishForm from '../Components/PublishBook/BookPublishForm'
 
-function PublishBook() {
+function PublishNewBook() {
   const navigate=useNavigate()
   useEffect(() => {
     const userData = localStorage.getItem("userData");
@@ -28,5 +28,5 @@ function PublishBook() {
   )
 }
 
-export default PublishBook
+export default PublishNewBook
 

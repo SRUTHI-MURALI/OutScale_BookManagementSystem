@@ -7,8 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBackward } from "react-icons/fa";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { getUserBooks } from "../AxiosConfig/AxiosConfig";
+import { ImCross } from "react-icons/im";
+import { TiTick } from "react-icons/ti";
+import Swal from "sweetalert2";
+import { getUserBooks, publishBooks, unPublishBooks } from "../AxiosConfig/AxiosConfig";
 import SearchBar from "../SearchBar/SearchBar";
 import nil from "../../assets/No books.png"
 import { Image_Url } from "../../../Config/Config";
@@ -37,12 +39,36 @@ function UserPublishedBooksList() {
     }
   };
 
-  const handlepublish = async (id) => {
+  
+  const handlepublish = async (book) => {
     try {
-      
-      window.location.reload();
+      const result = await Swal.fire({
+        title: `Are you sure you want to ${
+          book.isActive ? "Unpublish" : "Publish"
+        } the Book "${book.title}"?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      });
+
+      if (result.isConfirmed) {
+        if (!book.isActive) {
+          await publishBooks(book._id);
+          book.isActive = true;
+          toast.success(`Book "${book.title}" published successfully`);
+        } else {
+          await unPublishBooks(book._id);
+          book.isActive = false;
+          toast.success(
+            `Book "${book.title}" unpublished successfully`
+          );
+        }
+
+        setAllBooks([...allBooks]);
+      }
     } catch (error) {
-      toast.error("Error deleting notes");
+      toast.error("Error");
     }
   };
   useEffect(() => {
@@ -181,15 +207,27 @@ function UserPublishedBooksList() {
                           onClick={() => handleEdit(book?._id)}
                         >
                           {" "}
-                          <FaEdit />
+                          <FaEdit size={20}/>
                         </Button>
-                        <Button
-                          variant="none"
-                          onClick={() => handlepublish(book?._id)}
-                        >
-                          {" "}
-                          <MdDelete />
-                        </Button>
+                        {book.isActive ? (
+                  <Button
+                  variant="none"
+                    onClick={() => {
+                      handlepublish(book);
+                    }}
+                  >
+                    <TiTick size={30}/>
+                  </Button>
+                ) : (
+                  <Button
+                  variant="none"
+                    onClick={() => {
+                      handlepublish(book);
+                    }}
+                  >
+                   <ImCross/>
+                  </Button>
+                )}
                        
                       </Col>
                     </React.Fragment>

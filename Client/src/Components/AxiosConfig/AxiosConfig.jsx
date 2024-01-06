@@ -56,7 +56,7 @@ export const addBooks = (
   userId,
   userName
 ) => {
-  return api.post(`/books/publish`, {
+  return api.post(`/books/publishnewbook`, {
     title,
     summary,
     genre,
@@ -69,6 +69,12 @@ export const addBooks = (
 
 export const tagingBooks = (id, userId) => {
   return api.put(`/books/managetags/${id}`, { userId });
+};
+export const publishBooks = (id) => {
+  return api.put(`/books/publish/${id}`);
+};
+export const unPublishBooks = (id) => {
+  return api.put(`/books/unpublish/${id}`);
 };
 
 export const getEditBooks = (id) => {

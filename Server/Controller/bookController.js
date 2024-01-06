@@ -2,7 +2,7 @@ import bookSchema from "../Model/bookModel.js";
 import userSchema from "../Model/userModel.js";
 
 /**************************** User Publish a Book *************************************/
-const userPublish = async (req, res) => {
+const userPublishNewBook = async (req, res) => {
   try {
     const { title, summary, genre,price, image, userId, userName } = req.body;
     const user = await userSchema.findById(userId);
@@ -73,6 +73,36 @@ const userEditBook = async (req, res) => {
   }
 };
 
+/**************************** User Publish a Book *************************************/
+
+const userPublish = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const booksFind = await bookSchema.findById(id);
+
+    if (booksFind.isActive) {
+      const updatedBook = await bookSchema.findByIdAndUpdate(
+        id,
+        { isActive: true },
+        { new: true }
+      );
+
+      res.status(200).json({ updatedBook });
+    } else {
+      const updatedBook = await bookSchema.findByIdAndUpdate(
+        id,
+        { isActive: true },
+        { new: true }
+      );
+
+      res.status(200).json({ updatedBook });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 /**************************** User UnPublish a Book *************************************/
 
 const userUnpublish = async (req, res) => {
@@ -189,5 +219,6 @@ export {
   handleSearch,
   userManageTaging,
   userEditBook,
-  userGetEditBook
+  userGetEditBook,
+  userPublishNewBook
 };

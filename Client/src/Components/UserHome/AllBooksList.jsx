@@ -10,9 +10,9 @@ import { getBooks, tagingBooks } from "../AxiosConfig/AxiosConfig";
 import SearchBar from "../SearchBar/SearchBar";
 import nil from "../../assets/No books.png";
 
-import { MdOutlineStarOutline } from "react-icons/md";
-import { IoStar } from "react-icons/io5";
-import { MdOutlineStarPurple500 } from "react-icons/md";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+
 import { Image_Url } from "../../../Config/Config";
 
 function AllBooksList() {
@@ -169,14 +169,14 @@ console.log(res.data.author);
                             variant="none"
                             onClick={() => handleTag(book?._id)}
                           >
-                            <IoStar />
+                            <FaHeart size={25} color="red"/>
                           </Button>
                         ) : (
                           <Button
                             variant="none"
                             onClick={() => handleTag(book?._id)}
                           >
-                            <MdOutlineStarOutline />
+                            <FaRegHeart size={25} color="grey" />
                           </Button>
                         )}
                       </Col>
