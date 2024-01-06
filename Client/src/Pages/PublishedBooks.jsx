@@ -3,6 +3,7 @@ import Header from '../Components/UserHome/Header'
 import { Container } from 'react-bootstrap'
 
 import { useNavigate } from 'react-router-dom'
+import UserPublishedBooksList from '../Components/UserPublishedBooks/UserPublishedBooksList'
 
 function PublishedBooks() {
     
@@ -20,8 +21,8 @@ function PublishedBooks() {
   }, [navigate]);
   return (
     <Container>
-      <Header/>
-     
+      <Header page={"Published Books"} />
+     <UserPublishedBooksList/>
      </Container>
     
   

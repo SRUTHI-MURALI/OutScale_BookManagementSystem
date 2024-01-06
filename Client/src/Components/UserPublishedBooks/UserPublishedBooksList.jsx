@@ -6,11 +6,11 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBackward } from "react-icons/fa";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
-import { getBooks } from "../AxiosConfig/AxiosConfig";
+import { getUserBooks } from "../AxiosConfig/AxiosConfig";
 import SearchBar from "../SearchBar/SearchBar";
 import nil from "../../assets/No books.png"
 
-function AllBooksList() {
+function UserPublishedBooksList() {
   const [allBooks, setAllBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchedBook, setSearchedBook] = useState([]);
@@ -24,20 +24,15 @@ function AllBooksList() {
     navigate("/addBooks");
   };
 
-  const handlePublishedBooks = (e) => {
-    e.preventDefault();
-    navigate("/publishedBooks");
-  };
-
   useEffect(() => {
     try {
-      const books = async () => {
-        const res = await getBooks();
+      const books = async (userId) => {
+        const res = await getUserBooks(userId);
 
-        setAllBooks(res.data.allBooks);
+        setAllBooks(res.data.booksFind);
        
       };
-      books();
+      books(parseData._id);
     } catch (error) {
       toast.error("Error fetching notes");
     }
@@ -101,15 +96,8 @@ function AllBooksList() {
                 {" "}
                 Add a Book{" "}
               </Button>
-              <Button
-                className="float-end add-button"
-                variant="info"
-                onClick={handlePublishedBooks}
-              >
-                {" "}
-                Published Books{" "}
-              </Button>
             </Col>
+            
             
           </Row>
           ):(
@@ -215,4 +203,4 @@ function AllBooksList() {
   );
 }
 
-export default AllBooksList;
+export default UserPublishedBooksList;

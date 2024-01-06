@@ -43,7 +43,12 @@ export const userLogin = (email, password) => {
 };
 
 export const getBooks = () => {
-  return axios.get(`${Base_Url}/api/books/published`);
+  return api.get(`/books/published`);
+ 
+};
+
+export const getUserBooks = (id) => {
+  return api.get(`/books/user/${id}`);
  
 };
 

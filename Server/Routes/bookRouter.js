@@ -8,7 +8,7 @@ import { userLoggedIn } from "../Middleware/userAuth.js";
 bookRouter.post("/publish",userLoggedIn, userPublish);
 bookRouter.put("/unpublish/:id",userLoggedIn, userUnpublish);
 bookRouter.get("/published", allPublishedBooks);
-bookRouter.get("/user",userLoggedIn, userPublishedBooks);
+bookRouter.get("/user/:id",userLoggedIn, userPublishedBooks);
 
 /**************************** User Search   *************************************/
 bookRouter.get("/search",userLoggedIn, handleSearch);
