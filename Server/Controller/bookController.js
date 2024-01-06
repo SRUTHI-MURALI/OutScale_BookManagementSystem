@@ -5,7 +5,7 @@ import userSchema from '../Model/userModel.js'
 const userPublish=async (req,res)=>{
   
     try {
-        const { title, summary, genre, image, userId } = req.body;
+        const { title, summary, genre, image, userId,userName } = req.body;
         const user = await userSchema.findById(userId);
         if (user) {
           const newBook = await bookSchema({
@@ -13,7 +13,8 @@ const userPublish=async (req,res)=>{
             summary,
             genre,
             image,
-            author: userId,
+            authorName: userName,
+            authorDetails:userId
           });
     
           newBook.save();
@@ -107,4 +108,44 @@ const handleSearch=async(req,res)=>{
   }
 }
 
-export {userPublish,userUnpublish,allPublishedBooks,userPublishedBooks,handleSearch}
+/**************************** User tag Books *************************************/
+
+const userManageTaging = async (req, res) => {
+  
+  try {
+    const { id } = req.params;
+    const {userId}= req.body;
+
+    const bookFind = await bookSchema.findById(id);
+    const userFind= await userSchema.findById(userId)
+    
+    if (bookFind && userFind) {
+      if(!userFind.tagged.includes(id)){
+
+        userFind.tagged.push(id)
+        await userFind.save()
+    
+      }else{
+
+        const index = userFind.tagged.indexOf(id);
+        
+        if (index !== -1) {
+          userFind.tagged.splice(index, 1);
+          await userFind.save( )
+        }
+
+      }
+
+      res.status(200).json({ userFind });
+    } else {
+      res.status(404).json({ message: "Note not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
+export {userPublish,userUnpublish,allPublishedBooks,userPublishedBooks,handleSearch,userManageTaging}

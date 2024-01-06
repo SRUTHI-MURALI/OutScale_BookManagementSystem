@@ -14,7 +14,11 @@ const bookSchema = new Schema({
   image: {
     type: String,
   },
-  author: {
+  authorName: {
+    type: String
+    
+  },
+  authorDetails:{
     type: Schema.Types.ObjectId,
     ref: "user",
   },
@@ -22,6 +26,10 @@ const bookSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  price:{
+    type:Number,
+
+  }
   
 },
 {

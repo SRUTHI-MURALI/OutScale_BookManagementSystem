@@ -34,10 +34,10 @@ function BookPublishForm() {
       }
     }
 
-    console.log("hai1");
+   
 
     await imageHandler();
-console.log("hai2",cloudinaryImage);
+
 
     if ( cloudinaryImage) {
       const response = await addBooks(
@@ -46,7 +46,8 @@ console.log("hai2",cloudinaryImage);
         genre,
         price,
         cloudinaryImage,
-        parseData._id
+        parseData._id,
+        parseData.name
       );
 
       if (response.data.newBook) {

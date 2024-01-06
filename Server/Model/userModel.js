@@ -13,6 +13,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  tagged:[{
+    type: Schema.Types.ObjectId,
+    ref: "books",
+  }]
 });
 
 export default model("user", userSchema);

@@ -96,6 +96,7 @@ const userLogin = async (req, res) => {
           name: user?.name,
           email: user?.email,
           phone: user?.phone,
+          tagged :user?.tagged,
           token,
         });
       } else {

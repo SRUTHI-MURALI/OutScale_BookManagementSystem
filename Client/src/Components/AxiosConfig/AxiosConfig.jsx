@@ -52,8 +52,8 @@ export const getUserBooks = (id) => {
  
 };
 
-export const addBooks = (title, summary, genre, price, image,userId) => {
-  console.log(title, summary, genre,price, image, userId);
+export const addBooks = (title, summary, genre, price, image,userId,userName) => {
+ 
   return api.post(`/books/publish`,{
     title,
     summary,
@@ -61,8 +61,16 @@ export const addBooks = (title, summary, genre, price, image,userId) => {
     image,
     price,
     userId,
+    userName,
   });
 };
+
+export const tagingBooks = (id,userId) => {
+  console.log(id,userId,'kkk');
+  return api.put(`/books/managetags/${id}`,{userId});
+ 
+};
+
 
 
 

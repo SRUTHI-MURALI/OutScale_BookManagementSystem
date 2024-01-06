@@ -6,9 +6,14 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBackward } from "react-icons/fa";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
-import { getBooks } from "../AxiosConfig/AxiosConfig";
+import { getBooks, tagingBooks } from "../AxiosConfig/AxiosConfig";
 import SearchBar from "../SearchBar/SearchBar";
-import nil from "../../assets/No books.png"
+import nil from "../../assets/No books.png";
+
+import { MdOutlineStarOutline } from "react-icons/md";
+import { IoStar } from "react-icons/io5";
+import { MdOutlineStarPurple500 } from "react-icons/md";
+import { Image_Url } from "../../../Config/Config";
 
 function AllBooksList() {
   const [allBooks, setAllBooks] = useState([]);
@@ -24,22 +29,28 @@ function AllBooksList() {
     navigate("/addBooks");
   };
 
-  const handlePublishedBooks = (e) => {
-    e.preventDefault();
-    navigate("/publishedBooks");
+  const handleTag = async (id) => {
+   
+    try {
+      const res = await tagingBooks(id, parseData._id);
+      parseData.tagged=res.data.userFind.tagged
+      localStorage.setItem("userData", JSON.stringify(parseData));
+    window.location.reload()
+    } catch (error) {
+      toast.error("Error tagging notes");
+    }
   };
 
   useEffect(() => {
     try {
       const books = async () => {
         const res = await getBooks();
-
+console.log(res.data.author);
         setAllBooks(res.data.allBooks);
-       
       };
       books();
     } catch (error) {
-      toast.error("Error fetching notes");
+      toast.error("Error fetching books");
     }
   }, []);
 
@@ -73,9 +84,6 @@ function AllBooksList() {
     setCurrentPage(data.selected);
   };
 
-  
-  
-
   return (
     <>
       <Container className="body-class  ">
@@ -85,50 +93,36 @@ function AllBooksList() {
             autoClose={3000}
           ></ToastContainer>
 
-       {currentTableData.length > 0 ? (
-          <Row className="mb-5">
-           
+          {currentTableData.length > 0 ? (
+            <Row className="mb-5">
               <Col xs={8} md={6} className="float-left ">
                 <SearchBar setSearchedNote={setSearchedBook} />
               </Col>
-          
-            <Col xs={4} md={6}>
-              <Button
-                className="float-end add-button"
-                variant="info"
-                onClick={handleAddBooks}
-              >
-                {" "}
-                Add a Book{" "}
-              </Button>
-              <Button
-                className="float-end add-button"
-                variant="info"
-                onClick={handlePublishedBooks}
-              >
-                {" "}
-                Published Books{" "}
-              </Button>
-            </Col>
-            
-          </Row>
-          ):(
+
+              <Col xs={4} md={6}>
+                <Button
+                  className="float-end add-button"
+                  variant="info"
+                  onClick={handleAddBooks}
+                >
+                  {" "}
+                  Add a Book{" "}
+                </Button>
+              </Col>
+            </Row>
+          ) : (
             <Row className="mb-5">
-           
-             
-          
-            <Col xs={3} md={7}>
-              <Button
-                className="float-end add-button"
-                variant="info"
-                onClick={handleAddBooks}
-              >
-                {" "}
-                Be the first to add a Book{" "}
-              </Button>
-            </Col>
-            
-          </Row>
+              <Col xs={3} md={7}>
+                <Button
+                  className="float-end add-button"
+                  variant="info"
+                  onClick={handleAddBooks}
+                >
+                  {" "}
+                  Be the first to add a Book{" "}
+                </Button>
+              </Col>
+            </Row>
           )}
 
           {currentTableData.length > 0 && (
@@ -142,7 +136,7 @@ function AllBooksList() {
                             <Card.Img
                               style={{ height: "14rem" }}
                               variant="top"
-                              
+                              src={`${Image_Url}/${book?.image}`}
                             />
                           </div>
                         </Link>
@@ -156,18 +150,35 @@ function AllBooksList() {
                         <p style={{ color: "gray" }}>
                           {formatDate(book?.createdAt)}
                         </p>
+                        <p style={{ marginBottom: "5px" }}>{book?.authorName}</p>
                         <p style={{ marginBottom: "5px" }}>{book?.genre}</p>
-                        
+
                         <p
                           style={{ marginBottom: "5px" }}
                           dangerouslySetInnerHTML={{ __html: book?.summary }}
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={3} className="mt-3">
-                        
-                        
-
-                       
+                        {console.log(parseData.tagged,'gfjjghfghfghfh')}
+                        {
+                        parseData &&
+                        parseData.tagged &&
+                        parseData.tagged.includes(book?._id) ? (
+                          
+                          <Button
+                            variant="none"
+                            onClick={() => handleTag(book?._id)}
+                          >
+                            <IoStar />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="none"
+                            onClick={() => handleTag(book?._id)}
+                          >
+                            <MdOutlineStarOutline />
+                          </Button>
+                        )}
                       </Col>
                     </React.Fragment>
                   ))
@@ -197,7 +208,6 @@ function AllBooksList() {
             <Col xs={12} className="d-flex justify-content-center">
               <img
                 style={{ height: "20rem", width: "25rem" }}
-                
                 alt="No Data"
                 src={nil}
               />
