@@ -45,7 +45,7 @@ function AllBooksList() {
     try {
       const books = async () => {
         const res = await getBooks();
-console.log(res.data.author);
+
         setAllBooks(res.data.allBooks);
       };
       books();
@@ -96,7 +96,7 @@ console.log(res.data.author);
           {currentTableData.length > 0 ? (
             <Row className="mb-5">
               <Col xs={8} md={6} className="float-left ">
-                <SearchBar setSearchedNote={setSearchedBook} />
+                <SearchBar setSearchedBook={setSearchedBook} />
               </Col>
 
               <Col xs={4} md={6}>

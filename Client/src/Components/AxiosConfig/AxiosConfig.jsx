@@ -82,8 +82,11 @@ export const getEditBooks = (id) => {
 };
 
 export const editBook = ( title, summary, genre,price,id) => {
-  console.log(id,'jgfjh');
   return api.put(`/books/editbooks/${id}`, { title, summary, genre,price});
+};
+
+export const searchBooks = (searchItem) => {
+  return api.post(`/books/search`,{searchItem});
 };
 
 export default api;

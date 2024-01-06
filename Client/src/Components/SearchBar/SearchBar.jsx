@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import axios from "axios";
 import { Base_Url } from "../../../Config/Config";
+import { searchBooks } from "../AxiosConfig/AxiosConfig";
+import { login } from "../Redux/UserSlice";
 
 const SearchBar = ({ setSearchedBook }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -10,9 +12,8 @@ const SearchBar = ({ setSearchedBook }) => {
     e.preventDefault();
     try {
       if (searchValue) {
-        const response = await axios.post(`${Base_Url}/user/search`, {
-          searchItem: searchValue,
-        });
+        const response = await searchBooks(searchValue)
+        console.log(response);
         setSearchedBook(response?.data?.results);
       }
     } catch (error) {

@@ -14,7 +14,7 @@ bookRouter.get("/published", allPublishedBooks);
 bookRouter.get("/user/:id",userLoggedIn, userPublishedBooks);
 
 /**************************** User Search   *************************************/
-bookRouter.get("/search",userLoggedIn, handleSearch);
+bookRouter.post("/search",userLoggedIn, handleSearch);
 
 /**************************** User Tag note   *************************************/
 bookRouter.put("/managetags/:id", userLoggedIn, userManageTaging);
