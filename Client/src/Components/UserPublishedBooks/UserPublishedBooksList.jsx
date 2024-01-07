@@ -159,7 +159,7 @@ function UserPublishedBooksList() {
                 onClick={handleAddBooks}
               >
                 {" "}
-                Be the first to add a Book{" "}
+                Be the first to Publish a Book{" "}
               </Button>
             </Col>
             
@@ -182,7 +182,7 @@ function UserPublishedBooksList() {
                           </div>
                         </Link>
                       </Col>
-                      <Col xs={12} sm={6} md={5} className="mt-5">
+                      <Col xs={12} sm={6} md={5} className="mt-2">
                         <h3
                           style={{ marginBottom: "8px", fontWeight: "bold" }}
                         >

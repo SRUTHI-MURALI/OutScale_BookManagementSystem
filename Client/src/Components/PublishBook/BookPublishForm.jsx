@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-
+import './BookPublish.css'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -26,6 +26,24 @@ function BookPublishForm() {
 
   async function publishNewBook(e) {
     e.preventDefault();
+    if (
+      title === "" ||
+      summary === "" ||
+      price === 0 ||
+      genre === "" 
+     
+    ) {
+      toast.error("Please fill all fields");
+      return;
+    }
+
+    const parsedPrice = parseFloat(price);
+  if (isNaN(parsedPrice) || parsedPrice < 0) {
+    toast.error("Invalid price. Please enter a valid positive number.");
+    return;
+  }
+
+
     if (image) {
       const allowedFormats = ["image/jpeg", "image/png"];
       if (!allowedFormats.includes(image.type)) {
@@ -42,7 +60,7 @@ function BookPublishForm() {
         title,
         summary,
         genre,
-        price,
+        parsedPrice,
         cloudinaryImage,
         parseData._id,
         parseData.name
@@ -71,17 +89,12 @@ function BookPublishForm() {
   }
 
   return (
-    <Container style={{ marginTop: "6rem" }}>
+    <Container style={{ marginTop: "7rem" }}>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       <Row className="justify-content-center align-items-center ">
-        <Col
-          md={12}
-          className="justify-content-center align-items-center text-center"
-        >
-          <h1>Add a new book here </h1>
-        </Col>
-        <Col md={8}>
-          <form
+        
+        <Col md={6}>
+          <form className="regCard "
             onSubmit={publishNewBook}
             style={{
               border: "1px solid #ccc",

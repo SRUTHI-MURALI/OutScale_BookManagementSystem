@@ -12,7 +12,7 @@ function EditBooks() {
 
   return (
     <div>
-      <Header/>
+      <Header page={"Edit Your Book Details"}/>
       <EditBook bookId={id}/>
     </div>
   );

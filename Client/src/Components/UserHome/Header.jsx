@@ -8,7 +8,7 @@ import { logout } from "../Redux/UserSlice";
 import "./Home.css";
 
 function Header({ page }) {
-  const [name, setName] = useState(page);
+  const [name] = useState(page);
   const userData = localStorage.getItem("userData");
   const parseData = userData ? JSON.parse(userData) : null;
 
@@ -54,42 +54,42 @@ function Header({ page }) {
               className={`nav-header-student ${isPublish ? "highlight" : ""}`}
               href="/addBooks"
             >
-              Publish
+              Add
             </Nav.Link>
 
             <Nav.Link
               className={`nav-header-student ${isPublished ? "highlight" : ""}`}
               href="/publishedBooks"
             >
-              Published
-            </Nav.Link>
-
-            <Nav.Link
-              className={`nav-header-student ${isProfile ? "highlight" : ""}`}
-              href="/userProfile"
-            >
-              Profile
+               Published
             </Nav.Link>
 
             <Nav.Link
               className={`nav-header-student ${isTagged ? "highlight" : ""}`}
               href="/taggedBooks"
             >
-              Tagged Books
+              Tagged
             </Nav.Link>
           </Nav>
 
-          <h1
-            style={{
-              fontSize: "larger",
-              color: "white",
-              fontWeight: "bold",
-              fontStyle: "italic",
-            }}
-            className="ml-auto"
-          >
-            {name ? name : "welcome " + parseData?.name}
-          </h1>
+          <Container className="d-flex justify-content-center align-items-center">
+            <h1
+              style={{
+                fontSize: "larger",
+                color: "white",
+                fontWeight: "bold",
+                fontStyle: "italic",
+              }}
+            >
+              {name ? name : "Welcome " + parseData?.name}
+            </h1>
+          </Container>
+          <Nav.Link
+              className={`nav-header-student ${isProfile ? "highlight" : ""}`}
+              href="/userProfile"
+            >
+              Profile
+            </Nav.Link>
 
           <Link to="" onClick={handleLogout}>
             <Button className="m-3">Logout</Button>

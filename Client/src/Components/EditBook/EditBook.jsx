@@ -40,34 +40,52 @@ function EditBook({ bookId }) {
 
   async function handleEditBook(e) {
     e.preventDefault();
-   
+    if (
+      title === "" ||
+      summary === "" ||
+      price === 0 ||
+      genre === "" 
+     
+    ) {
+      toast.error("Please fill all fields");
+      return;
+    }
+
+    const parsedPrice = parseFloat(price);
+  if (isNaN(parsedPrice) || parsedPrice < 0) {
+    toast.error("Invalid price. Please enter a valid positive number.");
+    return;
+  }
 
     {
      
       const response = await editBook(title, summary, genre,price, bookId);
-
+      
       if (response.data) {
-        setRedirect(true);
+        toast.success("successfully edited the book details");
+        setTimeout(() => {
+          setRedirect(true);
+        }, 4000);
+        
       }
     }
   }
 
   if (redirect) {
-    return <Navigate to={"/publishedBooks"} />;
+    
+    return <Navigate to={"/publishedBooks"} />
+      
+      
+   
   }
 
   return (
     <Container style={{ marginTop: "8rem" }}>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       <Row className="justify-content-center align-items-center ">
-        <Col
-          md={12}
-          className="justify-content-center align-items-center text-center"
-        >
-          <h1>Edit Your Book here </h1>
-        </Col>
-        <Col md={8}>
-          <form
+        
+        <Col md={6}>
+          <form className="regCard"
             onSubmit={handleEditBook}
             style={{
               border: "1px solid #ccc",
@@ -126,7 +144,7 @@ function EditBook({ bookId }) {
             </div>
             {image && (
               <div className="mb-3">
-                <div className="mt-2 " style={{ height: "4rem" }}>
+                <div className="mt-1" style={{ height: "3rem" }}>
                   <strong>Current Image:</strong>
                   <img
                     src={`${Image_Url}/${image}`}
@@ -141,9 +159,9 @@ function EditBook({ bookId }) {
               </div>
             )}
 
-            <div className="text-center">
+            <div className="text-center mt-4">
               <button type="submit" className="btn btn-primary">
-                Edit Book
+                Submit Edit 
               </button>
             </div>
           </form>
