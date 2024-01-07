@@ -39,6 +39,11 @@ export const userLogin = (email, password) => {
   return axios.post(`${Base_Url}/api/auth/login`, { email, password });
 };
 
+export const googleLogin = (id_token) => {
+  
+  return axios.post(`${Base_Url}/api/auth/googlelogin`, { id_token });
+};
+
 export const getBooks = () => {
   return api.get(`/books/published`);
 };

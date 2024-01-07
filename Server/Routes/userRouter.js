@@ -5,6 +5,7 @@ import {
   userRegisterSendOtp,
   userRegisterVerifyOtp,
   userLogin,
+  googleLogin,
   userProfile,
   userEditProfile,
   userEditProfileImage,
@@ -20,6 +21,7 @@ userRouter.post("/verifyOtp", userRegisterVerifyOtp);
 
 /**************************** User Login  *************************************/
 userRouter.post("/login", userLogin);
+userRouter.post("/googlelogin", googleLogin);
 
 /**************************** User Profile  *************************************/
 userRouter.get("/profile/:id", userLoggedIn, userProfile);

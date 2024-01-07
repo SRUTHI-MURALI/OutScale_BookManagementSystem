@@ -4,7 +4,11 @@ import { Col, Row } from "react-bootstrap";
 import "./Login.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
+import {
+  
+  GoogleLogin,
+  
+} from "@react-oauth/google";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +17,7 @@ import { useState, useEffect } from "react";
 
 import { useDispatch } from "react-redux";
 import { login } from "../Redux/UserSlice";
-import { userLogin } from "../AxiosConfig/AxiosConfig";
+import { googleLogin, userLogin } from "../AxiosConfig/AxiosConfig";
 
 function LoginForm() {
   const [password, setPassword] = useState("");
@@ -23,7 +27,26 @@ function LoginForm() {
   const navigate = useNavigate();
 
 
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const idToken = credentialResponse.credential;
 
+      const response = await googleLogin(idToken);
+
+      const userData = response.data;
+
+      localStorage.setItem("userData", JSON.stringify(userData));
+
+      dispatch(login(userData));
+      toast.success("successfully logged in");
+      navigate("/homePage");
+      
+     
+    } catch (error) {
+      console.error("Google authentication error:", error);
+      toast.error("Google authentication error");
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -122,7 +145,22 @@ function LoginForm() {
                     </Button>
                   </Col>
                 </Row>
-              
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "2rem",
+                  }}
+                >
+                  <GoogleLogin
+                    text="continue_with"
+                    onSuccess={handleGoogleLogin}
+                    onError={() => {
+                      console.log("Login Failed");
+                    }}
+                  />
+                </div>
               </Form>
               <Row>
                 <Col>
@@ -143,7 +181,7 @@ function LoginForm() {
           </Row>
         </Card>
       </Container>
-   
+    
   );
 }
 

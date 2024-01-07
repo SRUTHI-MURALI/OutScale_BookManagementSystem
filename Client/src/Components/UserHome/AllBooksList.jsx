@@ -33,7 +33,9 @@ function AllBooksList() {
   const handleTag = async (id) => {
     try {
       const res = await tagingBooks(id, parseData._id);
-      setTagBooks(res.data.taggedBooks);
+      const taggedBooksData = res.data.taggedBooks.map((e) => e._id);
+      console.log(taggedBooksData,'kkkk');
+        setTagBooks(taggedBooksData);
     } catch (error) {
       toast.error("Error tagging books");
     }
@@ -43,16 +45,17 @@ function AllBooksList() {
     try {
       const books = async (userId) => {
         const res = await taggedBooks(userId);
-
-        setTagBooks(res.data.taggedBooks);
+        const taggedBooksData = res.data.taggedBooks.map((e) => e._id);
+        setTagBooks(taggedBooksData);
+       
       };
       books(parseData._id);
     } catch (error) {
       toast.error("Error fetching notes");
     }
-  }, []);
+  }, [tagBooks]);
 
-  console.log(tagBooks, "kjghfg");
+
   useEffect(() => {
     try {
       const books = async () => {
@@ -123,7 +126,7 @@ function AllBooksList() {
               </Col>
             </Row>
           ) : (
-            searchedBook.length > 0 && (
+            searchedBook.length > 0 || currentTableData.length <= 0 && (
               <Row className="mb-5">
                 <Col xs={3} md={7}>
                   <Button
@@ -175,11 +178,10 @@ function AllBooksList() {
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={2} className="mt-3">
-                        
-                        {tagBooks.map((e) =>
-                           e._id === book?._id ? (
+                        {console.log(tagBooks)}
+                        {tagBooks.includes(book._id)  ? (
                             <Button
-                              key={e} // Add a unique key for each button
+                              key={book?._id} 
                               variant="none"
                               onClick={() => handleTag(book?._id)}
                             >
@@ -187,14 +189,15 @@ function AllBooksList() {
                             </Button>
                           ) : (
                             <Button
-                              key={e} // Add a unique key for each button
+                              key={book?._id} 
                               variant="none"
                               onClick={() => handleTag(book?._id)}
                             >
                               <FaRegHeart size={25} color="grey" />
                             </Button>
                           )
-                        )}
+                        }
+                        
                       </Col>
                     </React.Fragment>
                   ))

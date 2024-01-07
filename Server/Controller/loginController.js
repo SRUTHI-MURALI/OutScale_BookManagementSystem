@@ -108,6 +108,58 @@ const userLogin = async (req, res) => {
   }
 };
 
+/**************************** User Google Login  *************************************/
+
+const googleLogin = async (req, res) => {
+  
+  try {
+    const { id_token } = req.body;
+    const decodedToken = jwt.decode(id_token) ;
+    const { name, email, jti, phone } = decodedToken;
+    const emailfind = await userSchema.findOne({ email });
+    
+    if (emailfind ) {
+      
+      
+      const existingUser = emailfind ;
+
+      const token = generateToken(existingUser?._id);
+     
+      return res.status(200).json({
+        _id: existingUser?._id,
+          name: existingUser?.name,
+          email: existingUser?.email,
+          phone: existingUser?.phone,
+          tagged: existingUser?.tagged,
+          token,
+      });
+    
+      
+    } else {
+      const addUser = await userSchema.create({
+        name,
+        email,
+        jti,
+        phone,
+      });
+
+      const token = generateToken(addUser._id);
+      return res.status(200).json({
+        _id: addUser?._id,
+          name: addUser?.name,
+          email: addUser?.email,
+          phone: addUser?.phone,
+          tagged: addUser?.tagged,
+          token,
+      });
+    }
+
+    
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
 /**************************** User Profile  *************************************/
 
 const userProfile = async (req, res) => {
@@ -265,5 +317,6 @@ export {
   resetPassword,
   PasswordVerifyOtp,
   resetPasswordSentOtp,
-  userEditProfileImage
+  userEditProfileImage,
+  googleLogin
 };
