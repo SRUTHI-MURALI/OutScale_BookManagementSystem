@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Row, Form, Col, Button } from "react-bootstrap";
-import axios from "axios";
-import {  Image_Url, image_upload_url } from "../../../Config/Config";
+import { Container, Row, Form, Col, Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoMdClose } from "react-icons/io";
 
-
-import {  getUserProfile, userEditProfile } from "../AxiosConfig/AxiosConfig";
-
-
+import { getUserProfile, userEditProfile } from "../AxiosConfig/AxiosConfig";
 
 function UserEditProfileForm({ user, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
   const [country, setCountry] = useState("");
-  const [image, setImage] = useState(null);
-  const [cloudinaryURL, setCloudinaryURL] = useState("");
-  const [existingImage, setExistingImage] = useState("");
-  const [photo, setPhoto] = useState("");
-
+  
   useEffect(() => {
     const getProfileData = async (id) => {
       try {
@@ -36,7 +28,7 @@ function UserEditProfileForm({ user, onClose }) {
         setPhone(profile?.phone || "");
         setAge(profile?.age || "");
         setCountry(profile?.country || "");
-        setExistingImage(profile?.photo || "");
+       
       } catch (error) {
         console.log({ error });
       }
@@ -47,13 +39,7 @@ function UserEditProfileForm({ user, onClose }) {
   const handleEditUserProfile = async (e) => {
     e.preventDefault();
 
-    if (image) {
-      await imageHandler();
-    } else if (existingImage) {
-      setPhoto(existingImage);
-    } else {
-      setPhoto("No Pic");
-    }
+    
     const namePattern = /^[A-Za-z\s.]+$/;
     if (name === "") {
       setName("No Name");
@@ -82,8 +68,8 @@ function UserEditProfileForm({ user, onClose }) {
     if (age === "") {
       setAge("No Age");
     }
-    if (phone === '') {
-      setPhone('No number');
+    if (phone === "") {
+      setPhone("No number");
     }
     if (email === "") {
       setEmail("No Mail");
@@ -95,24 +81,22 @@ function UserEditProfileForm({ user, onClose }) {
       }
     }
 
-    if (photo) {
-      try {
-        await userEditProfile(
-          user._id,
-          name,
-          phone,
-          email,
-          password,
-          gender,
-          photo,
-          age,
-          country
-        );
-        toast.success("successfully edited");
-        onClose(false);
-      } catch (error) {
-        return;
-      }
+    try {
+      await userEditProfile(
+        user._id,
+        name,
+        phone,
+        email,
+        password,
+        gender,
+
+        age,
+        country
+      );
+      toast.success("successfully edited");
+      onClose(false);
+    } catch (error) {
+      return;
     }
   };
 
@@ -121,170 +105,143 @@ function UserEditProfileForm({ user, onClose }) {
     onClose(false);
   };
 
-  const imageHandler = async () => {
-    const formData = new FormData();
-    formData.append("file", image);
-    formData.append("upload_preset", "bookImage");
-    formData.append("cloud_name", "dnkc0odiw");
-    await axios
-      .post(`${image_upload_url}`, formData)
-      .then((response) => {
-        setCloudinaryURL(response.data.public_id);
-        setPhoto(cloudinaryURL);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <>
       <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
       <Container className="m-5">
-        <p className="allcourses-header mt-3">Edit Profile Details</p>
-
-        <Card className="m-5">
-          <Row>
-            <Col>
-              <Form onSubmit={handleEditUserProfile}>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="2">
-                    Name:
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="text"
-                      placeholder={name}
-                      value={name}
-                      onChange={(e) => {
-                        const trimmedName = e.target.value.trim();
-                        setName(trimmedName);
-                      }}
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="2">
-                    Email :
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="email"
-                      placeholder={email}
-                      value={email}
-                      onChange={(e) => {
-                        const trimmedEmail = e.target.value.trim();
-                        setEmail(trimmedEmail);
-                      }}
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="2">
-                    Phone
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="number"
-                      placeholder={phone}
-                      value={phone}
-                      onChange={(e) => {
-                        const trimmedPhone = e.target.value.trim();
-                        setPhone(trimmedPhone);
-                      }}
-                    />
-                  </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="2">
-                    Gender
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="text"
-                      placeholder={gender}
-                      value={gender}
-                      onChange={(e) => {
-                        const trimmedGender = e.target.value.trim();
-
-                        setGender(trimmedGender);
-                      }}
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="2">
-                    Age
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="number"
-                      placeholder={age}
-                      value={age}
-                      onChange={(e) => {
-                        const trimmedAge = e.target.value.trim();
-                        setAge(trimmedAge);
-                      }}
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mb-3">
-                  <Form.Label column sm="2">
-                    Country
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="text"
-                      placeholder={country}
-                      value={country}
-                      onChange={(e) => {
-                        const trimmedCountry = e.target.value.trim();
-                        setCountry(trimmedCountry);
-                      }}
-                    />
-                  </Col>
-                </Form.Group>
-                <Row>
-                  <Col>
-                    <Button type="submit">Submit</Button>
-                  </Col>
-                  <Col>
-                    <Button style={{ float: "right" }} onClick={handleClose}>
-                      Exit
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Col>
-            <Col xs={12} md={6}>
-              <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label className="m-5"></Form.Label>
-                <img
-                  style={{ maxWidth: "50%" }}
-                  src={`${Image_Url}/${existingImage}`}
-                  alt="profile"
-                  className="rounded-circle img-fluid"
-                />
-                <Form.Control
-                  className="mt-5"
-                  type="file"
-                  onChange={(e) => {
-                    const inputElement = e.target ;
-                    if (inputElement && inputElement.files) {
-                      const selectedFile = inputElement.files[0];
-                      setImage(selectedFile);
-                    }
-                  }}
-                />
+        <Row className="justify-content-center align-items-center ">
+          <Col>
+            <Form
+              onSubmit={handleEditUserProfile}
+              className="regCard"
+              style={{
+                border: "1px solid #ccc",
+                padding: "20px",
+                borderRadius: "8px",
+              }}
+            >
+              <Row>
+                <Col>
+                  <Button
+                    variant="none"
+                    className="float-end"
+                    onClick={handleClose}
+                  >
+                    <IoMdClose size={25} />
+                  </Button>
+                </Col>
+              </Row>
+              <Form.Group as={Row} className="mb-3 mt-3">
+                <Form.Label column sm="2">
+                  Name:
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="text"
+                    placeholder={name}
+                    value={name}
+                    onChange={(e) => {
+                      const trimmedName = e.target.value.trim();
+                      setName(trimmedName);
+                    }}
+                  />
+                </Col>
               </Form.Group>
-            </Col>
-          </Row>
-        </Card>
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label column sm="2">
+                  Email :
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="email"
+                    placeholder={email}
+                    value={email}
+                    onChange={(e) => {
+                      const trimmedEmail = e.target.value.trim();
+                      setEmail(trimmedEmail);
+                    }}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label column sm="2">
+                  Phone
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="number"
+                    placeholder={phone}
+                    value={phone}
+                    onChange={(e) => {
+                      const trimmedPhone = e.target.value.trim();
+                      setPhone(trimmedPhone);
+                    }}
+                  />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label column sm="2">
+                  Gender
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="text"
+                    placeholder={gender}
+                    value={gender}
+                    onChange={(e) => {
+                      const trimmedGender = e.target.value.trim();
+
+                      setGender(trimmedGender);
+                    }}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label column sm="2">
+                  Age
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="number"
+                    placeholder={age}
+                    value={age}
+                    onChange={(e) => {
+                      const trimmedAge = e.target.value.trim();
+                      setAge(trimmedAge);
+                    }}
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label column sm="2">
+                  Country
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="text"
+                    placeholder={country}
+                    value={country}
+                    onChange={(e) => {
+                      const trimmedCountry = e.target.value.trim();
+                      setCountry(trimmedCountry);
+                    }}
+                  />
+                </Col>
+              </Form.Group>
+              <Row>
+                <Col>
+                  <Button className="float-end" type="submit">
+                    Submit Form
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     </>
   );
 }
-
 
 export default UserEditProfileForm;

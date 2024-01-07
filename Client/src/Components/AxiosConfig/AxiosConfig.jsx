@@ -99,8 +99,12 @@ export const getUserProfile = (id) => {
 };
 
 
-export const userEditProfile = ( id,name, phone, email,password,gender,photo,age,country) => {
-  return api.put(`/auth/editprofile/${id}`, { name, phone, email,password,gender,photo,age,country});
+export const userEditProfile = ( id,name, phone, email,password,gender,age,country) => {
+  return api.put(`/auth/editprofile/${id}`, {name, phone, email,password,gender,age,country});
 };
+
+export const userEditProfileImage = (id,photo)=>{
+  return api.put(`/auth/editprofileimage/${id}`,{photo})
+}
 
 export default api;

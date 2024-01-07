@@ -9,8 +9,28 @@
      
   }
   
+  .regCard {
+    background-color: rgb(142, 189, 211);
+    height: 100%;
+    width: 50rem;
+   
+  }
+
+  .regCard1 {
+    background-color: rgb(142, 189, 211);
+    height: 100%;
+    width: 25rem;
+   
+  }
+
+  .regCard2 {
+    background-color: rgb(142, 189, 211);
+    height: 100%;
+    width: 65rem;
+   
+  }
   .bodyContainer{
-    margin-top: 170px;
+    margin-top: 140px;
     
   }
   .profile-pic-area {

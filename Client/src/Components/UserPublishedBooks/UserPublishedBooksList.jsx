@@ -10,9 +10,13 @@ import { FaEdit } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import Swal from "sweetalert2";
-import { getUserBooks, publishBooks, unPublishBooks } from "../AxiosConfig/AxiosConfig";
+import {
+  getUserBooks,
+  publishBooks,
+  unPublishBooks,
+} from "../AxiosConfig/AxiosConfig";
 import SearchBar from "../SearchBar/SearchBar";
-import nil from "../../assets/No books.png"
+import nil from "../../assets/No books.png";
 import { Image_Url } from "../../../Config/Config";
 
 function UserPublishedBooksList() {
@@ -30,16 +34,13 @@ function UserPublishedBooksList() {
   };
 
   const handleEdit = async (id) => {
-  
     try {
-     
       navigate(`/editBooks/${id}`);
     } catch (error) {
       toast.error("Error editing notes");
     }
   };
 
-  
   const handlepublish = async (book) => {
     try {
       const result = await Swal.fire({
@@ -60,9 +61,7 @@ function UserPublishedBooksList() {
         } else {
           await unPublishBooks(book._id);
           book.isActive = false;
-          toast.success(
-            `Book "${book.title}" unpublished successfully`
-          );
+          toast.success(`Book "${book.title}" unpublished successfully`);
         }
 
         setAllBooks([...allBooks]);
@@ -77,7 +76,6 @@ function UserPublishedBooksList() {
         const res = await getUserBooks(userId);
 
         setAllBooks(res.data.booksFind);
-       
       };
       books(parseData._id);
     } catch (error) {
@@ -115,9 +113,6 @@ function UserPublishedBooksList() {
     setCurrentPage(data.selected);
   };
 
-  
-  
-
   return (
     <>
       <Container className="body-class  ">
@@ -127,43 +122,36 @@ function UserPublishedBooksList() {
             autoClose={3000}
           ></ToastContainer>
 
-       {currentTableData.length > 0 ? (
-          <Row className="mb-5">
-           
+          {currentTableData.length > 0 ? (
+            <Row className="mb-5">
               <Col xs={8} md={6} className="float-left ">
                 <SearchBar setSearchedNote={setSearchedBook} />
               </Col>
-          
-            <Col xs={4} md={6}>
-              <Button
-                className="float-end add-button"
-                variant="info"
-                onClick={handleAddBooks}
-              >
-                {" "}
-                Add a Book{" "}
-              </Button>
-            </Col>
-            
-            
-          </Row>
-          ):(
+
+              <Col xs={4} md={6}>
+                <Button
+                  className="float-end add-button"
+                  variant="info"
+                  onClick={handleAddBooks}
+                >
+                  {" "}
+                  Add a Book{" "}
+                </Button>
+              </Col>
+            </Row>
+          ) : (
             <Row className="mb-5">
-           
-             
-          
-            <Col xs={3} md={7}>
-              <Button
-                className="float-end add-button"
-                variant="info"
-                onClick={handleAddBooks}
-              >
-                {" "}
-                Be the first to Publish a Book{" "}
-              </Button>
-            </Col>
-            
-          </Row>
+              <Col xs={3} md={7}>
+                <Button
+                  className="float-end add-button"
+                  variant="info"
+                  onClick={handleAddBooks}
+                >
+                  {" "}
+                  Be the first to Publish a Book{" "}
+                </Button>
+              </Col>
+            </Row>
           )}
 
           {currentTableData.length > 0 && (
@@ -183,52 +171,54 @@ function UserPublishedBooksList() {
                         </Link>
                       </Col>
                       <Col xs={12} sm={6} md={5} className="mt-2">
-                        <h3
-                          style={{ marginBottom: "8px", fontWeight: "bold" }}
-                        >
+                        <h3 style={{ marginBottom: "8px", fontWeight: "bold" }}>
                           {book?.title}
                         </h3>
                         <p style={{ color: "gray" }}>
                           {formatDate(book?.createdAt)}
-                          <p style={{ marginBottom: "1px" }}>{book?.authorName}</p>
+                          <p style={{ marginBottom: "1px" }}>
+                            {book?.authorName}
+                          </p>
                         </p>
-                        
-                        <p style={{ marginBottom: "3px" }}>Genre : {book?.genre}</p>
-                        <p style={{ marginBottom: "3px" }}>Amount : {book?.price}</p>
-                        <p 
+
+                        <p style={{ marginBottom: "3px" }}>
+                          Genre : {book?.genre}
+                        </p>
+                        <p style={{ marginBottom: "3px" }}>
+                          Amount : {book?.price}
+                        </p>
+                        <p
                           style={{ marginBottom: "2px" }}
                           dangerouslySetInnerHTML={{ __html: book?.summary }}
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={3} className="mt-3">
-                        
-                      <Button
+                        <Button
                           variant="none"
                           onClick={() => handleEdit(book?._id)}
                         >
                           {" "}
-                          <FaEdit size={20}/>
+                          <FaEdit size={20} />
                         </Button>
                         {book.isActive ? (
-                  <Button
-                  variant="none"
-                    onClick={() => {
-                      handlepublish(book);
-                    }}
-                  >
-                    <TiTick size={30}/>
-                  </Button>
-                ) : (
-                  <Button
-                  variant="none"
-                    onClick={() => {
-                      handlepublish(book);
-                    }}
-                  >
-                   <ImCross/>
-                  </Button>
-                )}
-                       
+                          <Button
+                            variant="none"
+                            onClick={() => {
+                              handlepublish(book);
+                            }}
+                          >
+                            <TiTick size={30} />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="none"
+                            onClick={() => {
+                              handlepublish(book);
+                            }}
+                          >
+                            <ImCross />
+                          </Button>
+                        )}
                       </Col>
                     </React.Fragment>
                   ))
@@ -258,7 +248,6 @@ function UserPublishedBooksList() {
             <Col xs={12} className="d-flex justify-content-center">
               <img
                 style={{ height: "20rem", width: "25rem" }}
-                
                 alt="No Data"
                 src={nil}
               />

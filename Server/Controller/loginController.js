@@ -131,11 +131,11 @@ const userProfile = async (req, res) => {
 const userEditProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, phone, email, password, gender, photo, age, country } =
+    const { name, phone, email, password, gender, age, country } =
       req.body;
     const userDetails = await userSchema.findByIdAndUpdate(
       id,
-      { name, phone, email, password, gender, photo, age, country },
+      { name, phone, email, password, gender,age, country },
       { new: true }
     );
     if (userDetails) {
@@ -148,6 +148,28 @@ const userEditProfile = async (req, res) => {
   }
 };
 
+/**************************** User Edit Profile  *************************************/
+const userEditProfileImage= async (req,res)=>{
+  try {
+    const {id}= req.params;
+    const {photo}= req.body
+    const userImage = await userSchema.findByIdAndUpdate(
+      id,
+      {
+        photo:photo
+      },
+      {new:true}
+    );
+    if(userImage){
+      res.status(201).json({
+        userImage,
+      });
+    }
+    
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 /**************************** User Reset Password otp *************************************/
 
 const resetPasswordSentOtp = async (req, res) => {
@@ -242,5 +264,6 @@ export {
   userProfile,
   resetPassword,
   PasswordVerifyOtp,
-  resetPasswordSentOtp
+  resetPasswordSentOtp,
+  userEditProfileImage
 };
