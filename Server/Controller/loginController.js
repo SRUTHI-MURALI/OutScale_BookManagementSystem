@@ -1,5 +1,5 @@
-import userSchema from "../Model/userModel.js"
-import bcrypt from "bcrypt"
+import userSchema from "../Model/userModel.js";
+import bcrypt from "bcrypt";
 import generateToken from "../TokenGenerator/generateToken.js";
 import generateOtp from "../OtpGenerator/generateOtp.js";
 import verifyOtp from "../OtpGenerator/verifyOtp.js";
@@ -10,7 +10,6 @@ let globalData = {};
 const userRegisterSendOtp = async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
-  
 
     const emailfind = await userSchema.findOne({ email });
 
@@ -80,14 +79,12 @@ const userRegisterVerifyOtp = async (req, res) => {
 /**************************** User Login  *************************************/
 
 const userLogin = async (req, res) => {
-  
   try {
     const { email, password } = req.body;
 
     const user = await userSchema.findOne({ email });
 
     if (user) {
-     
       const isMatchPassword = await bcrypt.compare(password, user.password);
       if (isMatchPassword) {
         const token = generateToken(user._id);
@@ -96,7 +93,7 @@ const userLogin = async (req, res) => {
           name: user?.name,
           email: user?.email,
           phone: user?.phone,
-          tagged :user?.tagged,
+          tagged: user?.tagged,
           token,
         });
       } else {
@@ -113,44 +110,137 @@ const userLogin = async (req, res) => {
 
 /**************************** User Profile  *************************************/
 
-const userProfile= async (req,res)=>{
+const userProfile = async (req, res) => {
   try {
-    const {id}= req.params
-    const userDetails= await userSchema.findById(id)
-    if(userDetails){
+    const { id } = req.params;
+    const userDetails = await userSchema.findById(id);
+    if (userDetails) {
       res.status(201).json({
-        userDetails
-      })
-    }else{
+        userDetails,
+      });
+    } else {
       res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 /**************************** User Edit Profile  *************************************/
 
-const userEditProfile= async(req,res)=>{
+const userEditProfile = async (req, res) => {
   try {
-    const {id}= req.params
-    const {name, phone, email,password,gender,photo,age,country}= req.body
-    const userDetails= await userSchema.findByIdAndUpdate(
+    const { id } = req.params;
+    const { name, phone, email, password, gender, photo, age, country } =
+      req.body;
+    const userDetails = await userSchema.findByIdAndUpdate(
       id,
-      {name, phone, email,password,gender,photo,age,country
-
-      },
-      {new:true}
-    )
-    if(userDetails){
+      { name, phone, email, password, gender, photo, age, country },
+      { new: true }
+    );
+    if (userDetails) {
       res.status(201).json({
-        userDetails
-      })
+        userDetails,
+      });
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
+/**************************** User Reset Password otp *************************************/
 
-export { userRegisterSendOtp, userRegisterVerifyOtp, userLogin,userEditProfile,userProfile };
+const resetPasswordSentOtp = async (req, res) => {
+ 
+  try {
+    const { email } = req.body;
+
+    const emailfind = await userSchema.findOne({ email });
+
+    if (emailfind != null) {
+      const message = "Your OTP for reset password";
+      const subject = "Email Authentication Otp";
+      const otp = await generateOtp(email, message, subject, res);
+     
+      res.status(200).json({ message: "OTP sent successfully" });
+      globalData.otp = otp;
+    } else {
+      res.status(400).json({ message: "No Email Exists" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+/**************************** User verify Password otp  *************************************/
+
+const PasswordVerifyOtp = async (req, res) => {
+  try {
+    const { email, verificationCode } = req.body;
+
+    if (!verificationCode) {
+      return res.status(400).json({ error: "Verification code is required" });
+    }
+    const otpResponse = await verifyOtp(verificationCode, globalData?.otp, res);
+
+    if (!otpResponse) {
+      return res.status(400).json({ message: "OTP verification failed" });
+    }
+
+    return res.status(200).json({ message: "OTP verified successfully" });
+  } catch (error) {
+    console.error("Error in resetting password:", error);
+    return res.status(500).json(error);
+  }
+};
+
+/**************************** User reset Password   *************************************/
+
+const resetPassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    if (hashedPassword) {
+      userSchema
+        .findOneAndUpdate(
+          { email: email },
+          { password: hashedPassword },
+          { new: true }
+        )
+        .then((data) => {
+          if (!data) {
+            res.status(404).send({
+              message: `Cannot update user with ID: ${email}. User not found.`,
+            });
+          } else {
+            return res
+              .status(200)
+              .json({ message: "Password reset successfully" });
+          }
+        })
+        .catch(() => {
+          return res.status(500).json({ message: "Password reset failed" });
+        });
+    } else {
+      res.status(500).send("error");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Password reset error" });
+  }
+};
+
+export {
+  userRegisterSendOtp,
+  userRegisterVerifyOtp,
+  userLogin,
+  userEditProfile,
+  userProfile,
+  resetPassword,
+  PasswordVerifyOtp,
+  resetPasswordSentOtp
+};

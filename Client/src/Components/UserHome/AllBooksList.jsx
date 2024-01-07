@@ -45,6 +45,7 @@ function AllBooksList() {
         const res = await taggedBooks(userId);
 
         setTagBooks(res.data.taggedBooks);
+       
       };
       books(parseData._id);
     } catch (error) {
@@ -52,6 +53,7 @@ function AllBooksList() {
     }
   }, []);
 
+  console.log(tagBooks,'kjghfg');
   useEffect(() => {
     try {
       const books = async () => {
@@ -67,6 +69,7 @@ function AllBooksList() {
 
   useEffect(() => {
     try {
+      
       setAllBooks(searchedBook);
     } catch (error) {
       toast.error("Error fetching notes");
@@ -97,7 +100,7 @@ function AllBooksList() {
 
   return (
     <>
-      <Container className="body-class  ">
+      <Container className="body-class">
         <>
           <ToastContainer
             position="top-center"
@@ -121,7 +124,7 @@ function AllBooksList() {
                 </Button>
               </Col>
             </Row>
-          ) : (
+          ) : searchedBook.length >0 && (
             <Row className="mb-5">
               <Col xs={3} md={7}>
                 <Button
@@ -172,7 +175,7 @@ function AllBooksList() {
                         ></p>
                       </Col>
                       <Col xs={12} sm={6} md={2} className="mt-3">
-                        
+                       { console.log(tagBooks,tagBooks.includes(book?._id),book?._id)}
                         {tagBooks.includes(book?._id) ? (
                           <Button
                             variant="none"

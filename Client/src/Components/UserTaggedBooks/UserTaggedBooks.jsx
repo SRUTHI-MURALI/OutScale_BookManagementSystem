@@ -92,28 +92,7 @@ function UserTaggedBooks() {
             autoClose={3000}
           ></ToastContainer>
 
-       {currentTableData.length > 0 ? (
-          <Row className="mb-5">
-           
-              
-          
-            <Col xs={4} md={6}>
-              
-            </Col>
-            
-            
-          </Row>
-          ):(
-            <Row className="mb-5">
-           
-             
-          
-            <Col xs={3} md={7}>
-              
-            </Col>
-            
-          </Row>
-          )}
+     
 
           {currentTableData.length > 0 && (
             <Row>

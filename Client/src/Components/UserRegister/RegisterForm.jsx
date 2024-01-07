@@ -91,7 +91,7 @@ function RegisterForm() {
   };
 
   return (
-    <Container className="mt-5"style={{width:'50rem'}}>
+    <Container className="mt-5"style={{width:'30rem'}}>
       <Card style={{backgroundColor:" rgb(139, 179, 198)"}}>
         <ToastContainer position="top-center"></ToastContainer>
         <Row className="m-3">

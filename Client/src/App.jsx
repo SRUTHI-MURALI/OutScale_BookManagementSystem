@@ -10,6 +10,7 @@ import EditBooks from "./Pages/EditBooks.jsx";
 import PublishNewBook from "./Pages/PublishNewBook.jsx";
 import TaggedBooks from "./Pages/TaggedBooks.jsx";
 import Profile from "./Pages/Profile.jsx";
+import ForgotPassword from "./Pages/ForgotPassword.jsx";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/editBooks/:id" element={<EditBooks/>} />
           <Route path="/taggedBooks" element={<TaggedBooks/>} />
           <Route path="/userProfile" element={<Profile/>} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           
         </Routes>
       </Router>

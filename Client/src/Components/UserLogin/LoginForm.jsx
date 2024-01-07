@@ -78,7 +78,7 @@ function LoginForm() {
 
   return (
     
-      <Container className="mt-5 " style={{width:'50rem'}}>
+      <Container className="mt-5 " style={{width:'30rem'}}>
         <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card style={{backgroundColor:" rgb(139, 179, 198)"}}>
           <ToastContainer
@@ -115,7 +115,7 @@ function LoginForm() {
                   />
                 </Form.Group>
                 <Row>
-                  <Col xs={12} md={5}></Col>
+                  <Col xs={12} md={4}></Col>
                   <Col xs={12} md={4}>
                     <Button variant="primary" type="submit">
                       Login to site
@@ -126,13 +126,16 @@ function LoginForm() {
               </Form>
               <Row>
                 <Col>
-                 
+                <h6 className="mt-3 ">
+                    {" "}
+                    <Link to="/forgotpassword">Forgot Password</Link>
+                  </h6>
                 </Col>
                 <Col>
-                  <h6 className="mt-3 ">
+                  <h6 className="mt-3">
                     {" "}
-                    If you are a new user?{" "}
-                    <Link to="/">Register</Link>
+                    
+                    <Link style={{float:'right'}} to="/">New Registration</Link>
                   </h6>
                 </Col>
               </Row>

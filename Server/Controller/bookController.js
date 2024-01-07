@@ -138,7 +138,7 @@ const userUnpublish = async (req, res) => {
 
 const allPublishedBooks = async (req, res) => {
   try {
-    const allBooks = await bookSchema.find();
+    const allBooks = await bookSchema.find({isActive:true});
     res.status(200).json({ allBooks });
   } catch (error) {
     console.error(error);
@@ -171,8 +171,12 @@ const handleSearch = async (req, res) => {
     const { searchItem } = req.body;
 
     const results = await bookSchema.find({ $text: { $search: searchItem } });
-
-    res.status(200).json({ results });
+    if(results){
+      res.status(200).json({ results });
+    }else{
+      res.status(401).json("No results");
+    }
+   
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
   }
