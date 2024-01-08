@@ -1,3 +1,3 @@
-export const Base_Url = "http://localhost:3001";
-export const image_upload_url = "https://api.cloudinary.com/v1_1/dnkc0odiw/image/upload/";
-export const Image_Url = "https://res.cloudinary.com/dnkc0odiw/image/upload/";
+export const Base_Url = import.meta.env.VITE_Base_Url
+export const image_upload_url = import.meta.env.VITE_image_upload_url
+export const Image_Url = import.meta.env.VITE_Image_Url
