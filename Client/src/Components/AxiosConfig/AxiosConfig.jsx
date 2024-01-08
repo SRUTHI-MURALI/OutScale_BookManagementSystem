@@ -39,9 +39,9 @@ export const userLogin = (email, password) => {
   return axios.post(`${Base_Url}/api/auth/login`, { email, password });
 };
 
-export const googleLogin = (id_token) => {
+export const googleLogin = async(id_token) => {
   
-  return axios.post(`${Base_Url}/api/auth/googlelogin`, { id_token });
+  return await axios.post(`${Base_Url}/api/auth/googlelogin`, { id_token });
 };
 
 export const getBooks = () => {
