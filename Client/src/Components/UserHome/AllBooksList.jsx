@@ -108,7 +108,7 @@ function AllBooksList() {
             autoClose={3000}
           ></ToastContainer>
 
-          {currentTableData.length > 0 ? (
+          {currentTableData.length > 0 && (
             <Row className="mb-5">
               <Col xs={8} md={6} className="float-left ">
                 <SearchBar setSearchedBook={setSearchedBook} />
@@ -125,22 +125,7 @@ function AllBooksList() {
                 </Button>
               </Col>
             </Row>
-          ) : (
-            searchedBook.length > 0 || currentTableData.length <= 0 && (
-              <Row className="mb-5">
-                <Col xs={3} md={7}>
-                  <Button
-                    className="float-end add-button"
-                    variant="info"
-                    onClick={handleAddBooks}
-                  >
-                    {" "}
-                    Be the first to publish a Book{" "}
-                  </Button>
-                </Col>
-              </Row>
-            )
-          )}
+          ) }
 
           {currentTableData.length > 0 && (
             <Row>

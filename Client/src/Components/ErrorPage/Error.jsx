@@ -1,5 +1,5 @@
 import React from 'react'
-import error from '../../assets/404_page_cover.jpg'
+import error from '../../assets/404.png'
 import { Col } from 'react-bootstrap'
 
 function Error() {
