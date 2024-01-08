@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import morgan from 'morgan'
 import connectDB from "../Connection/connection.js";
 import userRouter from "../Routes/userRouter.js";
 import bookRouter from "../Routes/bookRouter.js";
@@ -16,7 +17,7 @@ const corsOption = {
 };
 app.use(cors(corsOption));
 const PORT = process.env.port;
-
+app.use(morgan('tiny'))
 app.use("/api/auth", userRouter);
 app.use("/api/books", bookRouter);
 
