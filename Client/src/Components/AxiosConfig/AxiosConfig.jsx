@@ -52,7 +52,7 @@ export const getUserBooks = (id) => {
   return api.get(`/books/user/${id}`);
 };
 
-export const addBooks = (
+export const addBooks = async (
   title,
   summary,
   genre,
@@ -61,7 +61,7 @@ export const addBooks = (
   userId,
   userName
 ) => {
-  return api.post(`/books/publishnewbook`, {
+  return await api.post(`/books/publishnewbook`, {
     title,
     summary,
     genre,
