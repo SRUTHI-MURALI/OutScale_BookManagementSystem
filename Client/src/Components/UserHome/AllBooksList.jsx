@@ -34,7 +34,7 @@ function AllBooksList() {
     try {
       const res = await tagingBooks(id, parseData._id);
       const taggedBooksData = res.data.taggedBooks.map((e) => e._id);
-      console.log(taggedBooksData,'kkkk');
+     
         setTagBooks(taggedBooksData);
     } catch (error) {
       toast.error("Error tagging books");
@@ -86,7 +86,7 @@ function AllBooksList() {
     return formattedDate;
   }
 
-  let PageSize = 8;
+  let PageSize = 2;
   const pageCount = Math.ceil(allBooks.length / PageSize);
 
   const currentTableData = useMemo(() => {
