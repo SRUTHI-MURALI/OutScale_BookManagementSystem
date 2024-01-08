@@ -1,5 +1,6 @@
 import bookSchema from "../Model/bookModel.js";
 import userSchema from "../Model/userModel.js";
+import  sanitize  from 'mongo-sanitize';
 
 /**************************** User Publish a Book *************************************/
 const userPublishNewBook = async (req, res) => {
@@ -8,12 +9,12 @@ const userPublishNewBook = async (req, res) => {
     const user = await userSchema.findById(userId);
     if (user) {
       const newBook = await bookSchema({
-        title,
-        summary,
-        genre,
-        image,
-        price,
-        authorName: userName,
+        title:sanitize(title),
+        summary:sanitize(summary),
+        genre:sanitize(genre),
+        image:sanitize(image),
+        price:sanitize(price),
+        authorName: sanitize(userName),
         authorDetails: userId,
       });
 
@@ -55,10 +56,10 @@ const userEditBook = async (req, res) => {
     const findBook = await bookSchema.findByIdAndUpdate(
       id,
       {
-        title,
-        summary,
-        genre,
-        price,
+        title:sanitize(title),
+        summary:sanitize(summary),
+        genre:sanitize(genre),
+        price:sanitize(price)
       },
       { new: true }
     );
@@ -80,7 +81,7 @@ const userPublish = async (req, res) => {
 
     const booksFind = await bookSchema.findById(id);
 
-    if (booksFind.isActive) {
+    if (!booksFind.isActive) {
       const updatedBook = await bookSchema.findByIdAndUpdate(
         id,
         { isActive: true },
@@ -88,15 +89,7 @@ const userPublish = async (req, res) => {
       );
 
       res.status(200).json({ updatedBook });
-    } else {
-      const updatedBook = await bookSchema.findByIdAndUpdate(
-        id,
-        { isActive: true },
-        { new: true }
-      );
-
-      res.status(200).json({ updatedBook });
-    }
+    } 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -118,15 +111,7 @@ const userUnpublish = async (req, res) => {
       );
 
       res.status(200).json({ updatedBook });
-    } else {
-      const updatedBook = await bookSchema.findByIdAndUpdate(
-        id,
-        { isActive: true },
-        { new: true }
-      );
-
-      res.status(200).json({ updatedBook });
-    }
+    } 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

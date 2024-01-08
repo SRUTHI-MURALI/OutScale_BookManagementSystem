@@ -4,6 +4,7 @@ import generateToken from "../TokenGenerator/generateToken.js";
 import generateOtp from "../OtpGenerator/generateOtp.js";
 import verifyOtp from "../OtpGenerator/verifyOtp.js";
 import jwt from "jsonwebtoken";
+import sanitize from "mongo-sanitize";
 
 let globalData = {};
 /**************************** User Register Send Otp *************************************/
@@ -31,10 +32,10 @@ const userRegisterSendOtp = async (req, res) => {
         }
 
         const newuser = {
-          name: name,
-          email: email,
-          password: hash,
-          phone: phone,
+          name: sanitize(name),
+          email: sanitize(email),
+          password: sanitize(hash),
+          phone: sanitize(phone),
         };
 
         globalData.user = newuser;
@@ -114,9 +115,9 @@ const userLogin = async (req, res) => {
 const googleLogin = async (req, res) => {
   try {
     const { id_token } = req.body;
- 
+
     const decodedToken = jwt.decode(id_token);
-   
+
     const { name, email, jti, phone } = decodedToken;
     const emailfind = await userSchema.findOne({ email });
 
@@ -135,10 +136,10 @@ const googleLogin = async (req, res) => {
       });
     } else {
       const addUser = await userSchema.create({
-        name,
-        email,
-        jti,
-        phone,
+        name: sanitize(name),
+        email: sanitize(email),
+        jti: sanitize(jti),
+        phone: sanitize(phone),
       });
 
       const token = generateToken(addUser._id);
@@ -182,7 +183,15 @@ const userEditProfile = async (req, res) => {
     const { name, phone, email, password, gender, age, country } = req.body;
     const userDetails = await userSchema.findByIdAndUpdate(
       id,
-      { name, phone, email, password, gender, age, country },
+      {
+        name: sanitize(name),
+        phone: sanitize(phone),
+        email: sanitize(email),
+        password: sanitize(password),
+        gender: sanitize(gender),
+        age: sanitize(age),
+        country: sanitize(country),
+      },
       { new: true }
     );
     if (userDetails) {
@@ -203,7 +212,7 @@ const userEditProfileImage = async (req, res) => {
     const userImage = await userSchema.findByIdAndUpdate(
       id,
       {
-        photo: photo,
+        photo:sanitize (photo),
       },
       { new: true }
     );
@@ -275,7 +284,7 @@ const resetPassword = async (req, res) => {
       userSchema
         .findOneAndUpdate(
           { email: email },
-          { password: hashedPassword },
+          { password:sanitize (hashedPassword) },
           { new: true }
         )
         .then((data) => {

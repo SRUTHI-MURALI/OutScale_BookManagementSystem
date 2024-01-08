@@ -38,6 +38,6 @@ const bookSchema = new Schema({
 );
 
 bookSchema.index({ title: "text" });
-bookSchema.index({ type: "text" });
+
 
 export default model("books", bookSchema);
