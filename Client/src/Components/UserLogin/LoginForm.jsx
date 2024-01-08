@@ -5,7 +5,7 @@ import "./Login.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {
-  
+  GoogleOAuthProvider,
   GoogleLogin,
   
 } from "@react-oauth/google";
@@ -30,7 +30,6 @@ function LoginForm() {
   const handleGoogleLogin = async (credentialResponse) => {
     try {
       const idToken = credentialResponse.credential;
-
       const response = await googleLogin(idToken);
 
       const userData = response.data;
@@ -100,7 +99,7 @@ function LoginForm() {
   }, [navigate]);
 
   return (
-    
+    <GoogleOAuthProvider clientId="379707791102-omemi6codhkhrleom9unuk4215hoclfc.apps.googleusercontent.com">
       <Container className="mt-5 " style={{width:'30rem'}}>
         <ToastContainer position="top-center" autoClose={3000}></ToastContainer>
         <Card style={{backgroundColor:" rgb(139, 179, 198)"}}>
@@ -181,7 +180,7 @@ function LoginForm() {
           </Row>
         </Card>
       </Container>
-    
+      </GoogleOAuthProvider>
   );
 }
 

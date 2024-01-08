@@ -11,6 +11,7 @@ import PublishNewBook from "./Pages/PublishNewBook.jsx";
 import TaggedBooks from "./Pages/TaggedBooks.jsx";
 import Profile from "./Pages/Profile.jsx";
 import ForgotPassword from "./Pages/ForgotPassword.jsx";
+import ErrorPage from "./Pages/ErrorPage.jsx";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/taggedBooks" element={<TaggedBooks/>} />
           <Route path="/userProfile" element={<Profile/>} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="*" element={<ErrorPage />} />
           
         </Routes>
       </Router>

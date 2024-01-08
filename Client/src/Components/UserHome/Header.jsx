@@ -4,6 +4,7 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../Redux/UserSlice";
+import logo from "../../assets/outscale.jpeg"
 
 import "./Home.css";
 
@@ -31,6 +32,11 @@ function Header({ page }) {
   return (
     
       <Navbar className="navbar-student d-flex" fixed="top" expand="lg">
+        <img
+        className="logo m-1"
+        style={{ height: "4rem", width: "12rem" }}
+        src={logo}
+      />
         <Navbar.Toggle
           aria-controls="navbarScroll"
           className="custom-navbar-toggle "

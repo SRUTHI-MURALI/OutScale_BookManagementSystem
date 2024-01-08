@@ -4,7 +4,7 @@ import userSchema from "../Model/userModel.js";
 /**************************** User Publish a Book *************************************/
 const userPublishNewBook = async (req, res) => {
   try {
-    const { title, summary, genre,price, image, userId, userName } = req.body;
+    const { title, summary, genre, price, image, userId, userName } = req.body;
     const user = await userSchema.findById(userId);
     if (user) {
       const newBook = await bookSchema({
@@ -34,14 +34,14 @@ const userPublishNewBook = async (req, res) => {
 const userGetEditBook = async (req, res) => {
   try {
     const { id } = req.params;
-    
-    const findBook = await bookSchema.findById(id)
-   
-      if(findBook){
-        res.status(200).json({
-          findBook,
-        });
-      }
+
+    const findBook = await bookSchema.findById(id);
+
+    if (findBook) {
+      res.status(200).json({
+        findBook,
+      });
+    }
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -51,19 +51,18 @@ const userGetEditBook = async (req, res) => {
 const userEditBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, summary, genre,price } = req.body;
+    const { title, summary, genre, price } = req.body;
     const findBook = await bookSchema.findByIdAndUpdate(
       id,
       {
         title,
         summary,
         genre,
-        price
-        
+        price,
       },
       { new: true }
     );
-    if(findBook){
+    if (findBook) {
       res.status(200).json({
         findBook,
       });
@@ -138,7 +137,7 @@ const userUnpublish = async (req, res) => {
 
 const allPublishedBooks = async (req, res) => {
   try {
-    const allBooks = await bookSchema.find({isActive:true});
+    const allBooks = await bookSchema.find({ isActive: true });
     res.status(200).json({ allBooks });
   } catch (error) {
     console.error(error);
@@ -171,12 +170,11 @@ const handleSearch = async (req, res) => {
     const { searchItem } = req.body;
 
     const results = await bookSchema.find({ $text: { $search: searchItem } });
-    if(results){
+    if (results) {
       res.status(200).json({ results });
-    }else{
+    } else {
       res.status(401).json("No results");
     }
-   
   } catch (error) {
     res.status(500).json({ status: "failed", message: error.message });
   }
@@ -190,7 +188,7 @@ const userManageTaging = async (req, res) => {
     const { userId } = req.body;
 
     const bookFind = await bookSchema.findById(id);
-    const userFind = await userSchema.findById(userId)
+    const userFind = await userSchema.findById(userId);
 
     if (bookFind && userFind) {
       if (!userFind.tagged.includes(id)) {
@@ -204,7 +202,7 @@ const userManageTaging = async (req, res) => {
           await userFind.save();
         }
       }
-      const taggedBooks=userFind.tagged
+      const taggedBooks = userFind.tagged;
       res.status(200).json({ taggedBooks });
     } else {
       res.status(404).json({ message: "Note not found" });
@@ -215,18 +213,17 @@ const userManageTaging = async (req, res) => {
   }
 };
 
-
 /**************************** User's Tagged Books *************************************/
 
 const userTaggedBooks = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const userFind = await userSchema.findById(id).populate('tagged')
+    const userFind = await userSchema.findById(id).populate("tagged");
 
     if (userFind) {
-      const taggedBooks=userFind.tagged
-     
+      const taggedBooks = userFind.tagged;
+
       res.status(200).json({ taggedBooks });
     } else {
       res.status(500).json({ message: "no notes to display" });
@@ -246,5 +243,5 @@ export {
   userEditBook,
   userGetEditBook,
   userPublishNewBook,
-  userTaggedBooks
+  userTaggedBooks,
 };

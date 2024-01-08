@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import generateToken from "../TokenGenerator/generateToken.js";
 import generateOtp from "../OtpGenerator/generateOtp.js";
 import verifyOtp from "../OtpGenerator/verifyOtp.js";
+import jwt from "jsonwebtoken";
 
 let globalData = {};
 /**************************** User Register Send Otp *************************************/
@@ -111,30 +112,27 @@ const userLogin = async (req, res) => {
 /**************************** User Google Login  *************************************/
 
 const googleLogin = async (req, res) => {
-  
   try {
     const { id_token } = req.body;
-    const decodedToken = jwt.decode(id_token) ;
+ 
+    const decodedToken = jwt.decode(id_token);
+   
     const { name, email, jti, phone } = decodedToken;
     const emailfind = await userSchema.findOne({ email });
-    
-    if (emailfind ) {
-      
-      
-      const existingUser = emailfind ;
+
+    if (emailfind) {
+      const existingUser = emailfind;
 
       const token = generateToken(existingUser?._id);
-     
+
       return res.status(200).json({
         _id: existingUser?._id,
-          name: existingUser?.name,
-          email: existingUser?.email,
-          phone: existingUser?.phone,
-          tagged: existingUser?.tagged,
-          token,
+        name: existingUser?.name,
+        email: existingUser?.email,
+        phone: existingUser?.phone,
+        tagged: existingUser?.tagged,
+        token,
       });
-    
-      
     } else {
       const addUser = await userSchema.create({
         name,
@@ -146,15 +144,13 @@ const googleLogin = async (req, res) => {
       const token = generateToken(addUser._id);
       return res.status(200).json({
         _id: addUser?._id,
-          name: addUser?.name,
-          email: addUser?.email,
-          phone: addUser?.phone,
-          tagged: addUser?.tagged,
-          token,
+        name: addUser?.name,
+        email: addUser?.email,
+        phone: addUser?.phone,
+        tagged: addUser?.tagged,
+        token,
       });
     }
-
-    
   } catch (error) {
     res.status(400).json(error);
   }
@@ -183,11 +179,10 @@ const userProfile = async (req, res) => {
 const userEditProfile = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, phone, email, password, gender, age, country } =
-      req.body;
+    const { name, phone, email, password, gender, age, country } = req.body;
     const userDetails = await userSchema.findByIdAndUpdate(
       id,
-      { name, phone, email, password, gender,age, country },
+      { name, phone, email, password, gender, age, country },
       { new: true }
     );
     if (userDetails) {
@@ -201,31 +196,29 @@ const userEditProfile = async (req, res) => {
 };
 
 /**************************** User Edit Profile  *************************************/
-const userEditProfileImage= async (req,res)=>{
+const userEditProfileImage = async (req, res) => {
   try {
-    const {id}= req.params;
-    const {photo}= req.body
+    const { id } = req.params;
+    const { photo } = req.body;
     const userImage = await userSchema.findByIdAndUpdate(
       id,
       {
-        photo:photo
+        photo: photo,
       },
-      {new:true}
+      { new: true }
     );
-    if(userImage){
+    if (userImage) {
       res.status(201).json({
         userImage,
       });
     }
-    
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 /**************************** User Reset Password otp *************************************/
 
 const resetPasswordSentOtp = async (req, res) => {
- 
   try {
     const { email } = req.body;
 
@@ -235,7 +228,7 @@ const resetPasswordSentOtp = async (req, res) => {
       const message = "Your OTP for reset password";
       const subject = "Email Authentication Otp";
       const otp = await generateOtp(email, message, subject, res);
-     
+
       res.status(200).json({ message: "OTP sent successfully" });
       globalData.otp = otp;
     } else {
@@ -318,5 +311,5 @@ export {
   PasswordVerifyOtp,
   resetPasswordSentOtp,
   userEditProfileImage,
-  googleLogin
+  googleLogin,
 };

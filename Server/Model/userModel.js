@@ -11,7 +11,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    
   },
   gender: {
     type: String,
@@ -38,6 +38,9 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "books",
   }],
+  jti: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     required: true,

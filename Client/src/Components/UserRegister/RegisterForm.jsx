@@ -94,7 +94,7 @@ function RegisterForm() {
     <Container className="mt-5"style={{width:'30rem'}}>
       <Card style={{backgroundColor:" rgb(139, 179, 198)"}}>
         <ToastContainer position="top-center"></ToastContainer>
-        <Row className="m-3">
+        <Row className="m-2">
           
           <Col xs={12} md={12}>
             <h1 style={{ textAlign: "center" }} className="mt-5">
