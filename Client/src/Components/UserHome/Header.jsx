@@ -46,7 +46,7 @@ function Header({ page }) {
        <Container>
        <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0 "
+            className="me-auto my-2 my-lg-0 flex ml-3"
             style={{ maxHeight: "80px" }}
             navbarScroll
           >
@@ -92,7 +92,7 @@ function Header({ page }) {
           </Container>
           <Nav.Link
               className={`nav-header-student ${isProfile ? "highlight" : ""}`}
-              href="/userProfile"
+              to="/userProfile"
             >
               Profile
             </Nav.Link>
