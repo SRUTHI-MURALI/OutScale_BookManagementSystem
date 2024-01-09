@@ -17,7 +17,7 @@ function Header({ page }) {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const isHome = location.pathname === "/homepage";
+  const isHome = location.pathname === "/homePage";
   const isPublish = location.pathname === "/addBooks";
   const isPublished = location.pathname === "/publishedBooks";
   const isProfile = location.pathname === "/userProfile";
@@ -50,32 +50,32 @@ function Header({ page }) {
             style={{ maxHeight: "80px" }}
             navbarScroll
           >
-            <Nav.Link
+            <Link
               className={`nav-header-student ${isHome ? "highlight" : ""}`}
-              href="/homePage"
+              to="/homePage"
             >
               Home
-            </Nav.Link>
-            <Nav.Link
+            </Link>
+            <Link
               className={`nav-header-student ${isPublish ? "highlight" : ""}`}
-              href="/addBooks"
+              to="/addBooks"
             >
               Add
-            </Nav.Link>
+            </Link>
 
-            <Nav.Link
+            <Link
               className={`nav-header-student ${isPublished ? "highlight" : ""}`}
-              href="/publishedBooks"
+              to="/publishedBooks"
             >
                Published
-            </Nav.Link>
+            </Link>
 
-            <Nav.Link
+            <Link
               className={`nav-header-student ${isTagged ? "highlight" : ""}`}
-              href="/taggedBooks"
+              to="/taggedBooks"
             >
               Tagged
-            </Nav.Link>
+            </Link>
           </Nav>
 
           <Container className="d-flex justify-content-center align-items-center">
