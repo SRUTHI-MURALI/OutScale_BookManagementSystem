@@ -46,32 +46,32 @@ function Header({ page }) {
        <Container>
        <Navbar.Collapse id="navbarScroll">
           <Nav
-            className="me-auto my-2 my-lg-0 flex ml-3"
+            className="me-auto my-2 my-lg-0 flex "
             style={{ maxHeight: "80px" }}
             navbarScroll
           >
             <Link
-              className={`nav-header-student ${isHome ? "highlight" : ""}`}
+              className={`me-5 nav-header-student ${isHome ? "highlight" : ""}`}
               to="/homePage"
             >
               Home
             </Link>
             <Link
-              className={`nav-header-student ${isPublish ? "highlight" : ""}`}
+              className={`me-5 nav-header-student ${isPublish ? "highlight" : ""}`}
               to="/addBooks"
             >
               Add
             </Link>
 
             <Link
-              className={`nav-header-student ${isPublished ? "highlight" : ""}`}
+              className={`me-5 nav-header-student ${isPublished ? "highlight" : ""}`}
               to="/publishedBooks"
             >
                Published
             </Link>
 
             <Link
-              className={`nav-header-student ${isTagged ? "highlight" : ""}`}
+              className={`me-5 nav-header-student ${isTagged ? "highlight" : ""}`}
               to="/taggedBooks"
             >
               Tagged
@@ -91,7 +91,7 @@ function Header({ page }) {
             </h1>
           </Container>
           <Nav.Link
-              className={`nav-header-student ${isProfile ? "highlight" : ""}`}
+              className={`me-5 nav-header-student ${isProfile ? "highlight" : ""}`}
               to="/userProfile"
             >
               Profile
