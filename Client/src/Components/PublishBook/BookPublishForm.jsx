@@ -73,13 +73,17 @@ function BookPublishForm() {
   }
 
   const imageHandler = async () => {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", "bookImage");
     formData.append("cloud_name", "dnkc0odiw");
     const response = await axios.post(`${image_upload_url}`, formData);
 
     setCloudinaryImage(response.data.public_id);
+    } catch (error) {
+      toast.error("failed to upload image , submit again")
+    }
   };
 
   
