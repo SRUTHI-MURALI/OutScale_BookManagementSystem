@@ -52,7 +52,7 @@ function Header({ page }) {
           >
             <Nav.Link
               className={`nav-header-student ${isHome ? "highlight" : ""}`}
-              href="/homepage"
+              href="/homePage"
             >
               Home
             </Nav.Link>
