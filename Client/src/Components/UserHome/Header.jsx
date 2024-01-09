@@ -90,12 +90,12 @@ function Header({ page }) {
               {name ? name : "Welcome " + parseData?.name}
             </h1>
           </Container>
-          <Nav.Link
+          <Link
               className={`me-5 nav-header-student ${isProfile ? "highlight" : ""}`}
               to="/userProfile"
             >
               Profile
-            </Nav.Link>
+            </Link>
 
           <Link to="" onClick={handleLogout}>
             <Button className="m-3">Logout</Button>

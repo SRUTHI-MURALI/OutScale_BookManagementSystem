@@ -1,4 +1,4 @@
-import React from 'react'
+
 import error from '../../assets/404.png'
 import { Col } from 'react-bootstrap'
 
