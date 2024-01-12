@@ -54,8 +54,8 @@ function RegisterForm() {
 
     // Validate email format
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const emailP = /^[^\s@]+@gmail\.com$/;
-    if (!emailPattern.test(trimmedEmail.trim()) || !emailP.test(trimmedEmail.trim())) {
+   
+    if (!emailPattern.test(trimmedEmail.trim())) {
       toast.error("Please enter a valid email address");
       return;
     }
