@@ -122,7 +122,7 @@ function RegisterForm() {
               <Form.Group className="mb-3 mt-3" controlId="formGridAddress3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="email"
                   placeholder="123@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
