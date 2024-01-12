@@ -53,9 +53,10 @@ function RegisterForm() {
     }
 
     // Validate email format
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    
    
-    if (!emailPattern.test(trimmedEmail.trim())) {
+    if (!trimmedEmail) {
       toast.error("Please enter a valid email address");
       return;
     }
@@ -122,6 +123,7 @@ function RegisterForm() {
               <Form.Group className="mb-3 mt-3" controlId="formGridAddress3">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                
                   type="email"
                   placeholder="123@gmail.com"
                   value={email}
