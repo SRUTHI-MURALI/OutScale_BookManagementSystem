@@ -124,7 +124,7 @@ function RegisterForm() {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                 
-                  type="email"
+                  type="text"
                   placeholder="123@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
