@@ -54,8 +54,6 @@ function RegisterForm() {
 
     // Validate email format
     
-    
-   
     if (!trimmedEmail) {
       toast.error("Please enter a valid email address");
       return;
