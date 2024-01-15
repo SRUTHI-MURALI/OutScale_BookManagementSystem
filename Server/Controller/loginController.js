@@ -11,12 +11,14 @@ let globalData = {};
 
 const userRegisterSendOtp = async (req, res) => {
   try {
+   
     const { name, email, phone, password } = req.body;
 
     const emailfind = await userSchema.findOne({ email });
 
     if (emailfind) {
-      res.status(400).json(" email already existing");
+     
+      res.status(400).json({error:"email already existing"});
     } else {
       const message = "Your OTP for email verification";
       const subject = "Email Authentication Otp";

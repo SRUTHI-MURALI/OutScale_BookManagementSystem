@@ -80,7 +80,8 @@ function RegisterForm() {
 
       handleNavigation(trimmedEmail);
     } catch (error) {
-      toast.error("Registration error");
+     
+      toast.error(error.response.data.error);
       return;
     }
   };
